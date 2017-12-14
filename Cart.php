@@ -20,11 +20,8 @@
     }
     $_SESSION["cart"]=array_values($_SESSION["cart"]);
     $_SESSION["counter"]--;
-
   }
-
   $parm_array=array();
-
   $max_lim=intval($_SESSION["counter"]);
   if($max_lim!=0)
   {
@@ -34,8 +31,6 @@
      }
   }
   $parm_array=array_values($parm_array);
-
-
 ?>
 <!DOCTYPE html PUBLIC>
 <html >
