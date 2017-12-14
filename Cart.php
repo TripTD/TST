@@ -13,24 +13,18 @@
   if(isset($_GET["action"]) && $_GET["action"]=="remove")
   {
     $id_prod=intval($_GET["id"]);
-    $max_lim=intval($_SESSION["counter"]);
-    for($i=0;$i<$max_lim;$i++)
+    $key=array_search($id_prod,$_SESSION["cart"]);
+    if($key!==false)
     {
-      if($_SESSION["cart"][$i]==$id_prod)
-      {
-        $ok=0;
-        var_dump($_SESSION["cart"][$i]);
-        unset($_SESSION["cart"][$i]);
-        $_SESSION["cart"]=$_SESSION["cart"]--;
-        $_SESSION["counter"]--;
-        array_splice(array_filter($_SESSION["cart"]), 0, 0);
-        break;
-      }
+      unset($_SESSION["cart"][$key]);
     }
+    $_SESSION["cart"]=array_values($_SESSION["cart"]);
+    $_SESSION["counter"]--;
+
   }
 
   $parm_array=array();
-  array_splice($parm_array, 1, 1);
+
   $max_lim=intval($_SESSION["counter"]);
   if($max_lim!=0)
   {
@@ -39,6 +33,7 @@
         $parm_array[$i]=$_SESSION["cart"][$i];
      }
   }
+  $parm_array=array_values($parm_array);
 
 
 ?>
@@ -56,17 +51,9 @@
 
   <div id="container">
     <?php
-    if(intval($_SESSION["counter"])==0)
-    echo "<h1>$Message</h1>";
-    else {
-      $max_lim=intval($_SESSION["counter"]);
-      if($max_lim==0)
-      {
-        echo "NOTHING YET!";
-      }
-
-    }
-     ?>
+    if($max_lim>0)
+    {
+      ?>
      <table>
          <tr>
              <th>Name</th>
@@ -77,9 +64,6 @@
 
          <?php
 
-
-         if($max_lim>0)
-         {
          $gett="SELECT id,title,description,price FROM MyItems
          WHERE id IN(".implode(',',$parm_array).")";
          $stm=$conn->prepare($gett);
@@ -96,30 +80,13 @@
                  </tr>
             <?php
           }
-        }
-           else
-          {
-            $gett = "SELECT id,title, description, price FROM MyItems ORDER BY id";
-            $cath = $conn->query($gett);
-            if($cath ->num_rows > 0)
-            {
-               while($row = $cath->fetch_assoc())
-               {
-            ?>
-                 <tr>
-                   <td><?php echo $row["title"]; ?></td>
-                   <td><?php echo $row["description"]; ?></td>
-                   <td><?php echo $row["price"]; ?></td>
-                   <td><a href="cart.php?page=products&action=add&id=<?php echo $row["id"] ?>"> Add item </a></td>
-                 </tr>
-            <?php
-
-                }
-             }
-           }
          ?>
 
      </table>
+   <?php }
+   else {
+     echo $Message;
+   } ?>
      <p><a href="index.php">INDEX</a></p>
 
   </div><!--end container-->
