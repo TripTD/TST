@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require("phpScr/common.php");
     function renderForm( $title, $description, $price, $error)
     {
 ?>
@@ -32,10 +33,11 @@
   if(!isset($_POST["Submit"]))
   {
     renderForm("","","","");
+    echo "normal";
   }
   else
   {
-    echo "GOT HERES!!!!";
+    echo "GOT PAST SUBMIT!";
     if(isset($_GET["action"])&&$_GET["action"]=="edit")
     {
       $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
@@ -63,7 +65,7 @@
     }
     if(isset($_GET["action"])&&$_GET["action"]=="insert")
     {
-      echo "GOT through _GET insert and submit";
+      echo "GOT HERE 2";
       $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
       $description=mysql_real_escape_string(htmlspecialchars($_POST["Description"]));
       $price=mysql_real_escape_string(htmlspecialchars($_POST["Price"]));
@@ -74,7 +76,6 @@
       }
       else
       {
-        echo "Got to the last!";
         $result = $conn->query("SELECT COUNT(*) AS TOTALFOUND FROM MyItems");
         $row_array=$result->fetch_array(MYSQLI_ASSOC);
         $id_prod=$row_array["TOTALFOUND"]+1;
