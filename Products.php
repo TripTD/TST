@@ -14,6 +14,10 @@
       echo "ERROR: prepare fault!";
     }
   }
+  if(isset($_GET["action"])&&$_GET["action"]=="edit")
+  {
+    renderForm();
+  }
  ?>
  <DOCTYPE html!>
  <html>
