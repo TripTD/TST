@@ -29,9 +29,14 @@
     </html>
   <?php
   }
-  if((isset($_GET["action"])&&$_GET["action"]=="insert")||(isset($_GET["action"])&&$_GET["action"]=="edit"))
+  if(!isset($_POST["Submit"]))
   {
-    if($_GET["action"]=="edit"&&isset($_POST["Submit"]))
+    renderForm("","","","");
+  }
+  else
+  {
+    echo "GOT HERES!!!!";
+    if(isset($_GET["action"])&&$_GET["action"]=="edit")
     {
       $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
       $description=mysql_real_escape_string(htmlspecialchars($_POST["Description"]));
@@ -49,14 +54,16 @@
           $stmt->bind_param('ssss',$title,$description,$price,$id_prod);
           $stmt->execute();
           $stmt->close();
+          header("Location: Products.php");
         }
         else {
           echo "ERROR in prepare section UPDATE!";
         }
       }
     }
-    if($_GET["action"]=="insert"&&isset($_POST["Submit"]))
+    if(isset($_GET["action"])&&$_GET["action"]=="insert")
     {
+      echo "GOT through _GET insert and submit";
       $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
       $description=mysql_real_escape_string(htmlspecialchars($_POST["Description"]));
       $price=mysql_real_escape_string(htmlspecialchars($_POST["Price"]));
@@ -67,6 +74,7 @@
       }
       else
       {
+        echo "Got to the last!";
         $result = $conn->query("SELECT COUNT(*) AS TOTALFOUND FROM MyItems");
         $row_array=$result->fetch_array(MYSQLI_ASSOC);
         $id_prod=$row_array["TOTALFOUND"]+1;
@@ -75,6 +83,7 @@
           $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
           $stmt->execute();
           $stmt->close();
+          header("Location: Products.php");
         }
         else {
           echo "ERROR in prepare section INSERT!";

@@ -14,10 +14,6 @@
       echo "ERROR: prepare fault!";
     }
   }
-  if(isset($_GET["action"])&&$_GET["action"]=="edit")
-  {
-    renderForm();
-  }
  ?>
  <DOCTYPE html!>
  <html>
@@ -58,6 +54,6 @@
         }
        ?>
    </table>
-   <td><a href="Product.php?page=products&action=insert&id=<?php echo $row["id"] ?>"> Add item </a></td>
+   <td><a href="Product.php?page=products&action=insert"> Add item </a></td>
 </body>
 </html>
