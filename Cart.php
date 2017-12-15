@@ -1,6 +1,18 @@
 <?php
   session_start();
   require("phpScr/common.php");
+
+  if(isset($_POST["submit"]))
+  {
+    $to="dmncaesar@gmail.com";
+    $from= $_POST["email"];
+    $name= $_POST["name"];
+    $subject="Order list";
+    $message= "Coustomer ".$name." has the following order list: "."\n\n".$_POST["comments"];
+    $headers = "From: ". $from;
+    mail($to,$subject,$message,$headers);
+    echo "mail sent";
+  }
   $Message="You haven't selected items yet!";
   if(!isset($_SESSION["cart"]))
   {
@@ -85,6 +97,16 @@
      <p><a href="index.php">INDEX</a></p>
 
   </div><!--end container-->
+  <div id="order" >
+    <form action="cart.php" method="post">
+    Name <input type="text" name="coustomer_name"><br>
+    Contact details <input type="text" name="email"><br>
+    Comments <input type="text" name="comments"><br>
+    <input type="submit" name="submit" value="Submit">
+    </form>
+
+
+  </div>
 
 </body>
 </html>

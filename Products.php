@@ -1,8 +1,19 @@
 <?php
   session_start();
   require("phpScr/common.php");
-
-
+  if(isset($_GET["id"])&&$_GET["action"]=="remove")
+  {
+    $id_prod=intval($_GET["id"]);
+    if($stmt=$conn->prepare("DELETE FROM MyItems WHERE id=?"))
+    {
+      $stmt->bind_param("i",$id_prod);
+      $stmt->execute();
+      $stmt->close();
+    }
+    else {
+      echo "ERROR: prepare fault!";
+    }
+  }
  ?>
  <DOCTYPE html!>
  <html>
@@ -34,8 +45,8 @@
               <td><?php echo $row["title"]; ?></td>
               <td><?php echo $row["description"]; ?></td>
               <td><?php echo $row["price"]; ?></td>
-              <td><a href="products.php?page=products&action=edit&id=<?php echo $row["id"] ?>"> Edit item </a></td>
-              <td><a href="products.php?page=products&action=remove&id=<?php echo $row["id"] ?>"> Remove item </a></td>
+              <td><a href="Product.php?page=products&action=edit&id=<?php echo $row["id"] ?>"> Edit item </a></td>
+              <td><a href="Products.php?page=products&action=remove&id=<?php echo $row["id"] ?>"> Remove item </a></td>
             </tr>
        <?php
 
@@ -43,6 +54,6 @@
         }
        ?>
    </table>
-   <td><a href="products.php?page=products&action=insert&id=<?php echo $row["id"] ?>"> Add item </a></td>
+   <td><a href="Product.php?page=products&action=insert&id=<?php echo $row["id"] ?>"> Add item </a></td>
 </body>
 </html>

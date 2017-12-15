@@ -113,7 +113,10 @@
         $parm_array=array();
         if($max_lim==0)
         {
-          echo "NOTHING YET!";
+          if(count($parm_array))
+          {
+             echo "NOTHING YET!";
+           }
         }
         else {
            for($i=0;$i<$max_lim;$i++)
