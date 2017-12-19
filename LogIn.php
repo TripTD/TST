@@ -5,7 +5,7 @@ function renderLogin($username,$password,$error)
 {
   if(isset($_SESSION["logged"])&&$_SESSION["logged"][0]==$username&&$_SESSION["logged"][1]==$password)
   {
-    header("Location: Products.php");
+    header(" Location: Products.php");
   }
 ?>
   <!DOCTYPE HTML PUBLIC>

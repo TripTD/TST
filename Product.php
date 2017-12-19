@@ -48,7 +48,7 @@
           $stmt->bind_param('ssss',$title,$description,$price,$id_prod);
           $stmt->execute();
           $stmt->close();
-          header("Location: Products.php");
+          header(" Location: Products.php");
         }
         else {
           echo "ERROR in prepare section UPDATE!";
@@ -76,7 +76,7 @@
           $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
           $stmt->execute();
           $stmt->close();
-          header("Location: Products.php");
+          header(" Location: Products.php");
         }
         else {
           echo "ERROR in prepare section INSERT!";
