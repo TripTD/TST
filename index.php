@@ -88,7 +88,6 @@
                     </tr>
                <?php
              }
-             $stmt->close();
            }
               else
              {
@@ -112,7 +111,7 @@
                 $cath->close();
               }
             ?>
-            
+
         </table>
         <?php
         $max_lim=intval($_SESSION["counter"]);

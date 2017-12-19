@@ -4,9 +4,9 @@
 
   if(isset($_POST["submit"]))
   {
-    $to="dmncaesar@gmail.com";
+    $to="dmn_caesar@yahoo.com";
     $from= $_POST["email"];
-    $name= $_POST["name"];
+    $name= $_POST["coustomer_name"];
     $subject="Order list";
     $message= "Coustomer ".$name." has the following order list: "."\n\n".$_POST["comments"];
     $headers = "From: ". $from;
