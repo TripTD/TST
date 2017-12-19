@@ -31,7 +31,7 @@
            <th>Price</th>
            <th> </th>
        </tr>
-
+       
        <?php
 
        $gett = "SELECT id,title, description, price FROM MyItems ORDER BY id";

@@ -50,7 +50,8 @@
           $stmt->close();
           header(" Location: Products.php");
         }
-        else {
+        else
+       {
           echo "ERROR in prepare section UPDATE!";
         }
       }

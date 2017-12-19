@@ -112,7 +112,7 @@
                 $cath->close();
               }
             ?>
-
+            
         </table>
         <?php
         $max_lim=intval($_SESSION["counter"]);
