@@ -30,14 +30,7 @@
     </html>
   <?php
   }
-  $ecou=0;
-  if(isset($_POST["submit"]))
-  {
-    $ecou=1;
-  }
-  echo $ecou."<br>";
   if(isset($_POST["submit"])){
-    echo "GOT PAST SUBMIT!";
     if(isset($_GET["action"])&&$_GET["action"]=="edit")
     {
       $title=$conn->real_escape_string(htmlspecialchars($_POST["Title"]));
@@ -65,7 +58,6 @@
     }
     if(isset($_GET["action"])&&$_GET["action"]=="insert")
     {
-      echo "GOT HERE 2";
       $title=$conn->real_escape_string($_POST["Title"]);
       $description=$conn->real_escape_string(htmlspecialchars($_POST["Description"]));
       $price=$conn->real_escape_string(htmlspecialchars($_POST["Price"]));
@@ -97,7 +89,6 @@
     if(!isset($_POST["submit"]))
     {
       renderForm("","","","");
-      echo "normal";
     }
   }
   ?>
