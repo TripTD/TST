@@ -11,7 +11,6 @@
   </head>
   <body>
     <?php
-    // if there are any errors, display them
     if ($error != '')
     {
       echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div>';
@@ -71,6 +70,7 @@
         $result = $conn->query("SELECT COUNT(*) AS TOTALFOUND FROM MyItems");
         $row_array=$result->fetch_array(MYSQLI_ASSOC);
         $id_prod=$row_array["TOTALFOUND"]+1;
+        $result->close();
         if($stmt=$conn->prepare("INSERT INTO MyItems (id,title,description,price) VALUES (?,?,?,?)"))
         {
           $stmt->bind_param("ssss",$id_prod,$title,$description,$price);

@@ -87,6 +87,7 @@
                  </tr>
             <?php
           }
+          $stm->close();
          ?>
 
      </table>

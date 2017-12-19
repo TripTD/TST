@@ -52,8 +52,10 @@
 
            }
         }
+        $cath->close();
        ?>
    </table>
    <td><a href="Product.php?page=products&action=insert"> Add item </a></td>
+   <p><a href="Index.php?page=prducts&acion=logout"> Log out</a></p>
 </body>
 </html>

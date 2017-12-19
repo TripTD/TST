@@ -5,6 +5,10 @@
   {
     $_SESSION["cart"]=array();
   }
+  if(isset($_GET["action"])&&$_GET["action"]=="logout")
+  {
+    unset($_SESSION["logged"]);
+  }
   if(!isset($_SESSION["counter"]))
   {
     $_SESSION["counter"]=0;
@@ -84,6 +88,7 @@
                     </tr>
                <?php
              }
+             $stmt->close();
            }
               else
              {
@@ -104,6 +109,7 @@
 
                    }
                 }
+                $cath->close();
               }
             ?>
 
@@ -132,6 +138,7 @@
 
 
    <p><a href="cart.php">CART</a></p>
+   <p><a href="LogIn.php">Log In</a></p>
   </div><!--end container-->
 
 </body>
