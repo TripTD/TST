@@ -19,9 +19,9 @@
     ?>
     <form action="" method="post">
       <div>
-        <strong>Title: *</strong> <input type="text" name="Title" value="<?php echo $title; ?>"/><br/>
-        <strong>Description: *</strong> <input type="text" name="Description" value="<?php echo $description; ?>"/><br/>
-        <strong>Price: *</strong> <input type="number" name="Price" value="<?php echo $price; ?>"/><br/>
+        <strong>Title: </strong> <input type="text" name="Title" value="<?php echo $title; ?>"/><br/>
+        <strong>Description: </strong> <input type="text" name="Description" value="<?php echo $description; ?>"/><br/>
+        <strong>Price: </strong> <input type="number" name="Price" value="<?php echo $price; ?>"/><br/>
         <p>* Required</p>
         <input type="submit" name="submit" value="Submit">
       </div>
@@ -30,19 +30,19 @@
     </html>
   <?php
   }
-  if(!isset($_POST["Submit"]))
+  $ecou=0;
+  if(isset($_POST["submit"]))
   {
-    renderForm("","","","");
-    echo "normal";
+    $ecou=1;
   }
-  else
-  {
+  echo $ecou."<br>";
+  if(isset($_POST["submit"])){
     echo "GOT PAST SUBMIT!";
     if(isset($_GET["action"])&&$_GET["action"]=="edit")
     {
-      $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
-      $description=mysql_real_escape_string(htmlspecialchars($_POST["Description"]));
-      $price=mysql_real_escape_string(htmlspecialchars($_POST["Price"]));
+      $title=$conn->real_escape_string(htmlspecialchars($_POST["Title"]));
+      $description=$conn->real_escape_string(htmlspecialchars($_POST["Description"]));
+      $price=$conn->real_escape_string(htmlspecialchars($_POST["Price"]));
       if($title==""||$description==""||$price=="")
       {
         $error = "Please fill all the fields because they are required!";
@@ -66,9 +66,9 @@
     if(isset($_GET["action"])&&$_GET["action"]=="insert")
     {
       echo "GOT HERE 2";
-      $title=mysql_real_escape_string(htmlspecialchars($_POST["Title"]));
-      $description=mysql_real_escape_string(htmlspecialchars($_POST["Description"]));
-      $price=mysql_real_escape_string(htmlspecialchars($_POST["Price"]));
+      $title=$conn->real_escape_string($_POST["Title"]);
+      $description=$conn->real_escape_string(htmlspecialchars($_POST["Description"]));
+      $price=$conn->real_escape_string(htmlspecialchars($_POST["Price"]));
       if($title==""||$description==""||$price=="")
       {
         $error = "Please fill all the fields because they are required!";
@@ -92,4 +92,12 @@
       }
       }
     }
+    else
+    {
+    if(!isset($_POST["submit"]))
+    {
+      renderForm("","","","");
+      echo "normal";
+    }
+  }
   ?>
