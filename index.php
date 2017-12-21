@@ -1,8 +1,7 @@
 <?php
   session_start();
   require("phpScr/common.php");
-  if(!isset($_SESSION["cart"]))
-  {
+  if (!isset($_SESSION["cart"])) {
     $_SESSION["cart"]=array();
   }
   if(isset($_GET["action"])&&$_GET["action"]=="logout")
