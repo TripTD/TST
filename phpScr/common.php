@@ -1,23 +1,10 @@
 <?php
+  require_once("phpScr/config.php");
 
-// Declaring
-$servername = "localhost";
-$username = "root";
-$password = "local123";
-$dbname = "myDB";
-$logdb="logindb";
+  $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
-// Connection
-$conn = new mysqli($servername, $username, $password,$dbname);
-$logcon = new mysqli($servername,$username,$password,$logdb);
-
-// Check connection
-if ($conn->connect_error) {
+  if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-}
-if($logcon->connect_error)
-{
-  die("Connection to login Database failed: " . $logcon->connect_error);
-}
+  }
 
- ?>
+?>
