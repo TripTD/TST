@@ -1,12 +1,21 @@
 <?php
         session_start();
         require("phpScr/common.php");
-
-        if ( isset($_GET["action"]) && $_GET["action"] == "logout") {
-                unset($_SESSION["logged"]);
-        }
         if ( !isset($_SESSION["cart"])) {
                 $_SESSION["cart"]=array();
+        }
+        if ( !isset($_SESSION["evidence"])) {
+            $_SESSION["evidence"]=array();
+            $query = "SELECT id FROM MyItems";
+            $result = $conn->query($query);
+            if($result->num_rows>0) {
+                $a=0;
+                while($row = $result->fetch_assoc()) {
+                    $_SESSION["evidence"][$a]=$row["id"];
+                    $a = $a+1;
+                }
+            }
+            $result->close();
         }
         if ( !isset($_SESSION["counter"])) {
                 $_SESSION["counter"]=0;
@@ -36,7 +45,7 @@
                 }
         }
         if ( intval($_SESSION["counter"]) >= 0) {
-                $query = "SELECT id, title, description, price FROM MyItems WHERE id NOT IN (" . implode( ',', $ids) . ")";
+                $query = "SELECT id, title, description, price, imeg FROM MyItems WHERE id NOT IN (" . implode( ',', $ids) . ")";
                 if ( $stmt = $conn -> prepare($query)) {
                         $stmt -> execute();
                         $result = $stmt -> get_result();
@@ -49,11 +58,13 @@
                  <title>Shopping Cart</title>
              </head>
        <body>
+           <?php echo translate("Goede dag dames en heren", "nl", "en"); ?>
             <div id="container">
                  <div id="main">
                      <table>
                         <?php while ( $row = $result -> fetch_array(MYSQLI_NUM)) { ?>
                                <tr>
+                                      <td><img width="200" src="<?php echo $row[4]; ?>" alt=""></td>
                                       <td><?php echo $row[1]; ?></td>
                                       <td><?php echo $row[2]; ?></td>
                                       <td><?php echo $row[3]; ?></td>

@@ -1,61 +1,55 @@
 <?php
-  session_start();
-  require("phpScr/common.php");
-  if(isset($_GET["id"])&&$_GET["action"]=="remove")
-  {
-    $id_prod=intval($_GET["id"]);
-    if($stmt=$conn->prepare("DELETE FROM MyItems WHERE id=?"))
-    {
-      $stmt->bind_param("i",$id_prod);
-      $stmt->execute();
-      $stmt->close();
+    session_start();
+    require("phpScr/common.php");
+    if ( isset($_GET["action"]) && $_GET["action"] == "logout") {
+            unset($_SESSION["logged"]);
     }
-    else {
-      echo "ERROR: prepare fault!";
+    if(!isset($_SESSION["logged"])) {
+        header("Location: LogIn.php");
     }
-  }
- ?>
- <DOCTYPE html!>
- <html>
-
- <head>
- <title>Market</title>
- </head>
- <body>
-   <h1>Product List</h1>
-   <br>
-   <table>
-       <tr>
-           <th>Name</th>
-           <th>Description</th>
-           <th>Price</th>
-           <th> </th>
-       </tr>
-       
-       <?php
-
-       $gett = "SELECT id,title, description, price FROM MyItems ORDER BY id";
-       $cath = $conn->query($gett);
-       if($cath ->num_rows > 0)
-       {
-          while($row = $cath->fetch_assoc())
-          {
-       ?>
-            <tr>
-              <td><?php echo $row["title"]; ?></td>
-              <td><?php echo $row["description"]; ?></td>
-              <td><?php echo $row["price"]; ?></td>
-              <td><a href="Product.php?page=products&action=edit&id=<?php echo $row["id"] ?>"> Edit item </a></td>
-              <td><a href="Products.php?page=products&action=remove&id=<?php echo $row["id"] ?>"> Remove item </a></td>
-            </tr>
-       <?php
-
-           }
+    if($_SESSION["logged"][0]!=AP_USER&&$_SESSION["logged"][1]!=AP_PASSWORD) {
+        header("Location: LogIn.php");
+    }
+    if(isset($_GET["id"])&&$_GET["action"]=="remove") {
+        $id_prod= intval($_GET["id"]);
+        $id_prod= stripslashes($id_prod);
+        if($stmt=$conn->prepare("DELETE FROM MyItems WHERE id=?")) {
+            $stmt->bind_param("i",$id_prod);
+            $stmt->execute();
+            $stmt->close();
         }
-        $cath->close();
-       ?>
-   </table>
-   <td><a href="Product.php?page=products&action=insert"> Add item </a></td>
-   <p><a href="Index.php?page=prducts&acion=logout"> Log out</a></p>
-</body>
-</html>
+    }
+    $query = "SELECT id, title, description, price FROM MyItems ORDER BY id";
+    if($stmt = $conn -> prepare($query)) {
+        $stmt->execute();
+        $result = $stmt -> get_result();
+    }
+?>
+<!DOCTYPE HTML PUBLIC>
+    <html>
+        <head>
+            <title>Product List</title>
+        </head>
+        <body>
+            <?php echo translate("Goede dag dames en heren", "nl", "en"); ?>
+            <div id="container">
+                <div id="main">
+                    <table>
+                        <?php while( $row = $result -> fetch_array(MYSQLI_NUM)) { ?>
+                            <tr>
+                                <td><?php echo $row[1]; ?></td>
+                                <td><?php echo $row[2]; ?></td>
+                                <td><?php echo $row[3]; ?></td>
+                                <td><a href="Product.php?page=products&action=edit&id=<?php echo $row[0] ?>"> Edit item </a></td>
+                                <td><a href="Products.php?page=products&action=remove&id=<?php echo $row[0] ?>"> Remove item </a></td>
+                            </tr>
+                        <?php } ?>
+                    </table>
+                    <br>
+                </div>
+                <p><a href="Product.php?page=products&action=insert"> Add item </a></p>
+                <br>
+                <p><a href="Products.php?page=products&action=logout"> Log out</a></p>
+            </div>
+        </body>
+    </html>
