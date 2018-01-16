@@ -1,3 +1,3 @@
 # TST
 
-Done! improvement should be taken into consideration on translation and remedey the editing;
+Done! improve the translation and editing!
