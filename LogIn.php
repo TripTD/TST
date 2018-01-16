@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require("phpScr/common.php");
+    require("common.php");
 
     if ( !isset($AP_USER) && !isset($AP_PASSWORD)) {
         $AP_USER = AP_USER;
@@ -21,7 +21,7 @@
     if ( isset($_SESSION["logged"]) && $_SESSION["logged"][0] == $username && $_SESSION["logged"][1] == $password) {
         header("Location: Products.php");
     }
-    
+
     if ( isset($_POST["submit"]))    {
         $username = $_POST["username"];
         $password = $_POST["password"];

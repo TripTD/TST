@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require("phpScr/common.php");
+    require("common.php");
 
     if ( isset($_GET["action"]) && $_GET["action"] == "logout") {
             unset($_SESSION["logged"]);
@@ -11,18 +11,18 @@
     if ( $_SESSION["logged"][0] != AP_USER && $_SESSION["logged"][1] != AP_PASSWORD) {
         header("Location: LogIn.php");
     }
-    
+
     if ( isset($_GET["id"]) && $_GET["action"] == "remove") {
         $id_prod = intval($_GET["id"]);
         $id_prod = stripslashes($id_prod);
-        if( $stmt = $conn->prepare("DELETE FROM MyItems WHERE id=?")) {
+        if( $stmt = $conn->prepare("DELETE FROM products WHERE id=?")) {
             $stmt->bind_param("i",$id_prod);
             $stmt->execute();
             $stmt->close();
         }
     }
 
-    $query = "SELECT id, title, description, price FROM MyItems ORDER BY id";
+    $query = "SELECT id, title, description, price FROM products ORDER BY id";
     if($stmt = $conn->prepare($query)) {
         $stmt->execute();
         $result = $stmt->get_result();

@@ -1,6 +1,6 @@
 <?php
         session_start();
-        require("phpScr/common.php");
+        require("common.php");
 
         if ( !isset($_SESSION["cart"])) {
                 $_SESSION["cart"] = array();
@@ -8,7 +8,7 @@
         if ( !isset($_SESSION["evidence"])) {
             $_SESSION["evidence"] = array();
 
-            $query = "SELECT id FROM MyItems";
+            $query = "SELECT id FROM products";
             $result = $conn->query($query);
             if($result->num_rows>0) {
                 $a = 0;
@@ -26,7 +26,7 @@
         if ( isset($_GET["action"]) && $_GET["action"] == "add") {
                 $id_prod = intval( $_GET["id"]);
                 $valid = 1;
-                
+
                 for ( $i = 0; $i < intval($_SESSION["counter"]); $i++) {
                         if ( $_SESSION["cart"][$i] == $id_prod) {
                                 $valid = 0;
@@ -50,7 +50,7 @@
                 }
         }
         if ( intval($_SESSION["counter"]) >= 0) {
-                $query = "SELECT id, title, description, price, imeg FROM MyItems WHERE id NOT IN (" . implode( ',', $ids) . ")";
+                $query = "SELECT id, title, description, price, imeg FROM products WHERE id NOT IN (" . implode( ',', $ids) . ")";
                 if ( $stmt = $conn->prepare($query)) {
                         $stmt->execute();
                         $result = $stmt->get_result();

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require("phpScr/common.php");
+    require("common.php");
     if ( !isset($_SESSION["err"])) {
         $_SESSION["err"] = "";
     }
@@ -43,7 +43,7 @@
             $id_prod = intval($_GET["id"]);
             $id_prod = stripslashes($id_prod);
             $ok = 0;
-            $query = "SELECT title, description, price FROM MyItems WHERE id = ?";
+            $query = "SELECT title, description, price FROM products WHERE id = ?";
 
             if ( $stmt = $conn->prepare($query)) {
                 $stmt->bind_param('i',$id_prod);
@@ -68,7 +68,7 @@
                 $price = $z;
             }
 
-            if ( $stmt = $conn->prepare("UPDATE MyItems SET title = ?, description = ?, price = ? WHERE id = ?")) {
+            if ( $stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ? WHERE id = ?")) {
                 $stmt ->bind_param('ssss',$title,$description,$price,$id_prod);
                 $stmt ->execute();
                 $stmt ->close();
@@ -102,7 +102,7 @@
                 header("Location: Product.php");
             }
             else {
-                $result = $conn->query("SELECT COUNT(*) AS TOTALFOUND FROM MyItems");
+                $result = $conn->query("SELECT COUNT(*) AS TOTALFOUND FROM products");
                 $row_array = $result->fetch_array(MYSQLI_ASSOC);
                 $id_next = $row_array["TOTALFOUND"]+1;
                 $result->close();
@@ -118,9 +118,9 @@
                 if ( $ok == 0) {
                     $id_prod = $id_next;
                 }
-                
+
                 }
-                if ( $stmt = $conn->prepare("INSERT INTO MyItems (id,title,description,price) VALUES (?,?,?,?)")) {
+                if ( $stmt = $conn->prepare("INSERT INTO products (id,title,description,price) VALUES (?,?,?,?)")) {
                     $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
                     $stmt->execute();
                     $stmt->close();

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require("phpScr/common.php");
+    require("common.php");
 
     if ( !isset($mailerror)) {
         $mailerror = "";
@@ -67,9 +67,9 @@
     }
 
     $parm_array = array_values($parm_array);
-    
+
     if ( $max_lim > 0) {
-        $gett = "SELECT id,title,description,price,imeg FROM MyItems
+        $gett = "SELECT id,title,description,price,imeg FROM products
                WHERE id IN(".implode(',',$parm_array).")";
         $stm = $conn->prepare($gett);
         $stm->execute();
