@@ -40,6 +40,12 @@
                 }
         }
 
+        if (isset($_GET["l"]) && $_GET["l"] == "fr") {
+             $_SESSION["lang"]=0;
+         }else {
+             $_SESSION["lang"]=1;
+         }
+
         if ( !isset($ids)) {
                 $ids =  array();
                 $ids[0] = 0;
@@ -60,10 +66,13 @@
  <!DOCTYPE html PUBLIC>
        <html >
              <head>
-                 <title>Shopping Cart</title>
+                 <title>Shopping</title>
              </head>
        <body>
             <div id="container">
+                <?php echo t('Language preference') .":" ; ?>
+                <p><a href = "index.php"><?php echo t('English'); ?></a></p>
+                <p><a href = "index.php?l=fr"><?php echo t('Francais'); ?></a></p>
                  <div id="main">
                      <table>
                         <?php while ( $row = $result->fetch_array(MYSQLI_NUM)): ?>
@@ -72,14 +81,14 @@
                                       <td><?php echo $row[1]; ?></td>
                                       <td><?php echo $row[2]; ?></td>
                                       <td><?php echo $row[3]; ?></td>
-                                      <td><a href="index.php?page=products&action=add&id= <?php echo $row[0] ?>"> Add Item </a></td>
+                                      <td><a href="index.php?page=products&action=add&id= <?php echo $row[0] ?>"><?php echo t('Add Item'); ?></a></td>
                                </tr>
                        <?php endwhile; ?>
                      </table>
                      <br>
                 </div>
-                <p><a href="Cart.php"> Go to Cart </a></p>
+                <p><a href="Cart.php"><?php echo t('Go to Cart'); ?></a></p>
             </div>
-            <p><a href="LogIn.php"> LogIn </a></p>
+            <p><a href="LogIn.php"><?php echo t('Log in'); ?></a></p>
        </body>
        </html>

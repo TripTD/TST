@@ -33,7 +33,7 @@
             $price = "";
         }
     }
-    
+
     if ( isset($_POST["submit"])) {
 
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
@@ -149,10 +149,10 @@
                 <?php endif; ?>
                 <form action = "" method = "post" enctype = "multipart/form-data">
                     <div>
-                        <strong>Title: </strong> <input type = "text" name = "Title" value = "<?php echo $title; ?>"/><br/>
-                        <strong>Description: </strong> <input type = "text" name = "Description" value = "<?php echo $description; ?>"/><br/>
-                        <strong>Price: </strong> <input type = "number" name = "Price" value = "<?php echo $price; ?>"/><br/>
-                        <strong>Image: </strong> <input type = "file" name = "img">
+                        <strong><?php echo t('Title'); ?> </strong> <input type = "text" name = "Title" value = "<?php echo $title; ?>"/><br/>
+                        <strong><?php echo t('Description'); ?> </strong> <input type = "text" name = "Description" value = "<?php echo $description; ?>"/><br/>
+                        <strong><?php echo t('Price'); ?> </strong> <input type = "number" name = "Price" value = "<?php echo $price; ?>"/><br/>
+                        <strong><?php echo t('Image'); ?> </strong> <input type = "file" name = "img">
                         <input type = "submit" name = "submit" value = "submit">
                     </div>
                 </form>
