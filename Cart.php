@@ -9,17 +9,21 @@
         foreach ( $_SESSION["cart"] as $key => $value) {
             $_SESSION["prod_list"] .= $_SESSION["cart"][$key]." ";
         }
+
         $to = "dmn_caesar@yahoo.com";
         $from = $_POST["email"];
         if ( !filter_var($from, FILTER_VALIDATE_EMAIL)) {
             $mailerror = "Please add a valid email adress!";
             header("Location: cart.php");
         }
+
         $name = $_POST["coustomer_name"];
         $subject = "Order list";
         $message = "Coustomer ".$name." has the following order list: ".$_SESSION["prod_list"]."\n\n Additional information: ".$_POST["comments"];
         $headers = "From: ". $from;
+
         mail( $to,$subject,$message,$headers);
+
         foreach ( $_SESSION["cart"] as $key => $value) {
             if ( $key !== false) {
                 unset($_SESSION["cart"][$key]);
@@ -30,7 +34,9 @@
             $_SESSION["counter"]--;
         }
     }
+
     $Message = "You haven't selected items yet!";
+
     if ( !isset($_SESSION["cart"])) {
         $_SESSION["cart"] = array();
     }
@@ -40,6 +46,7 @@
     if ( !isset($_SESSION["counter"])) {
         $_SESSION["counter"] = 0;
     }
+
     if ( isset($_GET["action"]) && $_GET["action"] == "remove") {
         $id_prod = intval($_GET["id"]);
         $key = array_search($id_prod,$_SESSION["cart"]);
@@ -49,14 +56,18 @@
         $_SESSION["cart"] = array_values($_SESSION["cart"]);
         $_SESSION["counter"]--;
     }
+
     $parm_array = array();
     $max_lim = intval($_SESSION["counter"]);
+
     if ($max_lim != 0) {
         for ( $i = 0; $i < $max_lim; $i++) {
             $parm_array[$i] = $_SESSION["cart"][$i];
         }
     }
+
     $parm_array = array_values($parm_array);
+    
     if ( $max_lim > 0) {
         $gett = "SELECT id,title,description,price,imeg FROM MyItems
                WHERE id IN(".implode(',',$parm_array).")";

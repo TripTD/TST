@@ -1,6 +1,7 @@
 <?php
     session_start();
     require("phpScr/common.php");
+
     if ( !isset($AP_USER) && !isset($AP_PASSWORD)) {
         $AP_USER = AP_USER;
         $AP_PASSWORD = AP_PASSWORD;
@@ -12,6 +13,7 @@
         $username = "";
         $password = "";
     }
+
     if ( isset($_SESSION["error"]) && $_SESSION["error"] > 0) {
         echo '<p style="font-size:16px; color:red;"> WRONG CREDENTIALS! </p><br>';
         echo '<p style="font-size:16px; color:red;"> Try again! </p>';
@@ -19,6 +21,7 @@
     if ( isset($_SESSION["logged"]) && $_SESSION["logged"][0] == $username && $_SESSION["logged"][1] == $password) {
         header("Location: Products.php");
     }
+    
     if ( isset($_POST["submit"]))    {
         $username = $_POST["username"];
         $password = $_POST["password"];

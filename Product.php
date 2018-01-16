@@ -16,8 +16,10 @@
     if ( !isset($price)) {
         $price = "";
     }
+
     if ( isset($_POST["submit"])) {
-        if ( isset($_GET["action"])&&$_GET["action"] == "edit") {
+
+        if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
             if ( isset($_FILES["img"])) {
                 if ( empty($_FILES["img"]["name"])) {
                     echo " You need to insert an image";
@@ -28,11 +30,13 @@
                     $fl_temp = $_FILES["img"]["tmp_name"];
                     if ( in_array($fl_extn,$allowed)) {
                         img($fl_extn,$fl_temp);
-                    } else {
+                    }
+                    else {
                         echo "The extension is not valid!";
                     }
                 }
             }
+
             $title = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
             $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
             $price = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
@@ -40,8 +44,7 @@
             $id_prod = stripslashes($id_prod);
             $ok = 0;
             $query = "SELECT title, description, price FROM MyItems WHERE id = ?";
-            var_dump($query);
-            var_dump($conn->prepare($query));
+
             if ( $stmt = $conn->prepare($query)) {
                 $stmt->bind_param('i',$id_prod);
                 if ( $result = $conn->query($stmt)) {
@@ -54,6 +57,7 @@
                     $stmt->close();
                 }
             }
+
             if ( $title = "") {
                 $title = $x;
             }
@@ -63,6 +67,7 @@
             if ( $price = "") {
                 $price = $z;
             }
+
             if ( $stmt = $conn->prepare("UPDATE MyItems SET title = ?, description = ?, price = ? WHERE id = ?")) {
                 $stmt ->bind_param('ssss',$title,$description,$price,$id_prod);
                 $stmt ->execute();
@@ -70,6 +75,7 @@
                 header("Location: Products.php");
             }
         }
+
         if ( isset($_GET["action"]) && $_GET["action"] == "insert") {
             if ( isset($_FILES["img"])) {
                 if ( empty($_FILES["img"]["name"])) {
@@ -86,9 +92,11 @@
                     }
                 }
             }
+
             $title = $conn->real_escape_string($_POST["Title"]);
             $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
             $price = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
+
             if ( $title == "" || $description == "" || $price == "") {
                 $_SESSION["err"] = "Please fill all the fields";
                 header("Location: Product.php");
@@ -99,6 +107,7 @@
                 $id_next = $row_array["TOTALFOUND"]+1;
                 $result->close();
                 $ok = 0;
+
                 for ( $a = 0; $a < $id_next; $a++) {
                     if ( $a+1 != $_SESSION["evidence"][$a]) {
                         $ok = 1;
@@ -109,6 +118,7 @@
                 if ( $ok == 0) {
                     $id_prod = $id_next;
                 }
+                
                 }
                 if ( $stmt = $conn->prepare("INSERT INTO MyItems (id,title,description,price) VALUES (?,?,?,?)")) {
                     $stmt->bind_param("ssss",$id_prod,$title,$description,$price);

@@ -1,15 +1,18 @@
 <?php
         session_start();
         require("phpScr/common.php");
+
         if ( !isset($_SESSION["cart"])) {
                 $_SESSION["cart"] = array();
         }
         if ( !isset($_SESSION["evidence"])) {
             $_SESSION["evidence"] = array();
+
             $query = "SELECT id FROM MyItems";
             $result = $conn->query($query);
             if($result->num_rows>0) {
                 $a = 0;
+
                 while($row = $result->fetch_assoc()) {
                     $_SESSION["evidence"][$a] = $row["id"];
                     $a = $a+1;
@@ -23,6 +26,7 @@
         if ( isset($_GET["action"]) && $_GET["action"] == "add") {
                 $id_prod = intval( $_GET["id"]);
                 $valid = 1;
+                
                 for ( $i = 0; $i < intval($_SESSION["counter"]); $i++) {
                         if ( $_SESSION["cart"][$i] == $id_prod) {
                                 $valid = 0;
@@ -35,6 +39,7 @@
                         $_SESSION["counter"] ++ ;
                 }
         }
+
         if ( !isset($ids)) {
                 $ids =  array();
                 $ids[0] = 0;
