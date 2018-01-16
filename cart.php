@@ -83,6 +83,9 @@
     </head>
     <body>
         <div id="container">
+            <?php echo t('Language preference') .":" ; ?>
+            <p><a href = "cart.php"><?php echo t('English'); ?></a></p>
+            <p><a href = "cart.php?l=fr"><?php echo t('Francais'); ?></a></p>
         <?php if ( $mailerror != ""): ?>
         <?php echo $mailerror; ?>
     <?php endif; ?>
@@ -90,9 +93,9 @@
 			<table>
                 <tr>
                      <th>     </th>
-                     <th>Name</th>
-                     <th>Description</th>
-                     <th>Price</th>
+                     <th><?php echo t('Title'); ?></th>
+                     <th><?php echo t('Description'); ?></th>
+                     <th><?php echo t('Price'); ?></th>
                      <th> </th>
                  </tr>
                  <?php while ( $row = $result->fetch_array(MYSQLI_NUM)): ?>
@@ -101,7 +104,7 @@
                        <td><?php echo $row[1]; ?></td>
                        <td><?php echo $row[2]; ?></td>
                        <td><?php echo $row[3]; ?></td>
-                       <td><a href = "cart.php?page=products&action=remove&id=<?php echo $row[0] ?>"> Remove item </a></td>
+                       <td><a href = "cart.php?page=products&action=remove&id=<?php echo $row[0] ?>"><?php echo t('Remove Item'); ?></a></td>
                      </tr>
                  <?php endwhile; $stm->close(); $result->close(); ?>
             </table>
@@ -112,9 +115,9 @@
         </div><!--end container-->
         <div id="order" >
             <form action = "cart.php" method = "post">
-                Name <input type = "text" name = "coustomer_name"><br>
-                Contact details <input type = "text" name = "email"><br>
-                Comments <input type = "text" name = "comments"><br>
+                <?php echo t('Name'); ?> <input type = "text" name = "coustomer_name"><br>
+                <?php echo t('Contact details'); ?> <input type = "text" name = "email"><br>
+                <?php echo t('Comments'); ?> <input type = "text" name = "comments"><br>
                 <input type = "submit" name= "submit" value = "Submit">
             </form>
         </div>
