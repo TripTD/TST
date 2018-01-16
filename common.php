@@ -16,38 +16,47 @@
 
   }
 
-  function translate( $q, $sl, $tl) {
-      if ( $sl == $tl || $sl == '' || $tl == '') {
-          return $q;
-      }
-      else{
-          $res = "";
-          $qqq = explode(".", $q);
-          if ( count($qqq) < 2) {
-              @unlink($_SERVER['DOCUMENT_ROOT']."/transes.html");
-              copy("http://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&oe=UTF-8&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&sl=".$sl."&tl=".$tl."&hl=hl&q=".urlencode($q), $_SERVER['DOCUMENT_ROOT']."/transes.html");
-              if ( file_exists($_SERVER['DOCUMENT_ROOT']."/transes.html")){
-                  $dara = file_get_contents($_SERVER['DOCUMENT_ROOT']."/transes.html");
-                  $f = explode("\"", $dara);
-                  $res .= $f[1];
-              }
-          }
-          else{
-              for ( $i = 0; $i < (count($qqq)-1); $i++){
-                  if($qqq[$i] == ' ' || $qqq[$i] == '') {
-                  }
-                  else{
-                      copy("http://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&oe=UTF-8&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&sl=".$s."&tl=".$e."&hl=hl&q=".urlencode($qqq[$i]), $_SERVER['DOCUMENT_ROOT']."/transes.html");
-                      $dara = file_get_contents($_SERVER['DOCUMENT_ROOT']."/transes.html");
-                      @unlink($_SERVER['DOCUMENT_ROOT']."/transes.html");
-                      $f = explode("\"", $dara);
-                      $res .= $f[1].". ";
-                  }
-              }
-          }
-          return $res;
-      }
-}
+  $language = isset($_GET['l']) ? $_GET['l'] : LANG_ENGLISH;
+    function t($string, $args = array(), $langcode = NULL) {
+        global $language, $translation;
+        $langcode = isset($langcode) ? $langcode : $language;
+        if ( isset($translation[$langcode][$string]) ) {
+                $string = $translation[$langcode][$string];
+        }
+        if ( empty($args) ) {
+                return $string;
+        } else {
+            foreach ( $args as $key => $value ) {
+                switch ( $key[0] ) {
+                    case '!':
+                    case '@':
+                    case '%':
+                    default: $args[$key] = $value; break;
+                }
+            }
 
+            return strtr($string, $args);
+        }
+    }
+    $translation["fr"] = array(
+        "Username" => "Nom d'utilisateur",
+        "Name" => "Nom",
+        "Add Item" => "Ajouter l'objet",
+        "Remove Item" => "Retirer l'objet",
+        "Contact details" => "Details du contact",
+        "Comments" => "Commentaires ",
+        "Index" => "Index",
+        "Password" => "Mot de passe",
+        "Go to Cart" => "Aller au panier",
+        "Log in" => "S'identifier",
+        "Log out" => "Se deconnecter",
+        "Edit Item" => "modifier l'article",
+        "Go to Market" => "Aller au marche",
+        "Title" => "Titre",
+        "Description" => "La description",
+        "Price" => "Prix",
+        "Image" => "Image",
+        "Language preference" => "Preference de langue",
+            );
 
 ?>
