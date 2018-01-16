@@ -1,22 +1,39 @@
 <?php
     session_start();
     require("common.php");
+
     if ( !isset($_SESSION["err"])) {
         $_SESSION["err"] = "";
     }
     if ( !isset($_SESSION["testarea"])) {
         $_SESSION["testarea"] = array();
     }
-    if ( !isset($title)) {
-        $title = "";
-    }
-    if ( !isset($description)) {
-        $description = "";
-    }
-    if ( !isset($price)) {
-        $price = "";
-    }
+    if ( !isset($title) || !isset($description) || !isset($price)) {
+        if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
+            $id_prod = intval($_GET["id"]);
+            $id_prod = stripslashes($id_prod);
 
+            if ( $stmt = $conn->prepare("SELECT *FROM products WHERE id = ?")) {
+                $stmt->bind_param("i",$id_prod);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ( $row = $result->fetch_array(MYSQLI_NUM)) {
+                    $title = $row[1];
+                    $description = $row[2];
+                    $price = $row[3];
+                }
+
+                $result->close();
+                $stmt->close();
+            }
+        } elseif ( isset($_GET["action"]) && $_GET["action"] == "insert") {
+            $title = "";
+            $description = "";
+            $price = "";
+        }
+    }
+    
     if ( isset($_POST["submit"])) {
 
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
@@ -37,35 +54,20 @@
                 }
             }
 
-            $title = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
-            $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
-            $price = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
+            $title_0 = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
+            $description_0 = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
+            $price_0 = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
             $id_prod = intval($_GET["id"]);
             $id_prod = stripslashes($id_prod);
-            $ok = 0;
-            $query = "SELECT title, description, price FROM products WHERE id = ?";
 
-            if ( $stmt = $conn->prepare($query)) {
-                $stmt->bind_param('i',$id_prod);
-                if ( $result = $conn->query($stmt)) {
-                    while ( $row = $result->fetch_row()) {
-                        $x = $row[0];
-                        $y = $row[1];
-                        $z = $row[2];
-                    }
-                    $result->close();
-                    $stmt->close();
-                }
+            if ( $title_0 != $title) {
+                $title = $title_0;
             }
-
-            if ( $title = "") {
-                $title = $x;
+            if ( $description_0 != $description) {
+                $description = $description_0;
             }
-            if ( $description = "") {
-                $description = $y;
-            }
-            if ( $price = "") {
-                $price = $z;
+            if ( $price_0 != $price) {
+                $price = $price_0;
             }
 
             if ( $stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ? WHERE id = ?")) {
