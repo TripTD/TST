@@ -2,23 +2,23 @@
         session_start();
         require("phpScr/common.php");
         if ( !isset($_SESSION["cart"])) {
-                $_SESSION["cart"]=array();
+                $_SESSION["cart"] = array();
         }
         if ( !isset($_SESSION["evidence"])) {
-            $_SESSION["evidence"]=array();
+            $_SESSION["evidence"] = array();
             $query = "SELECT id FROM MyItems";
             $result = $conn->query($query);
             if($result->num_rows>0) {
-                $a=0;
+                $a = 0;
                 while($row = $result->fetch_assoc()) {
-                    $_SESSION["evidence"][$a]=$row["id"];
+                    $_SESSION["evidence"][$a] = $row["id"];
                     $a = $a+1;
                 }
             }
             $result->close();
         }
         if ( !isset($_SESSION["counter"])) {
-                $_SESSION["counter"]=0;
+                $_SESSION["counter"] = 0;
         }
         if ( isset($_GET["action"]) && $_GET["action"] == "add") {
                 $id_prod = intval( $_GET["id"]);
@@ -29,26 +29,26 @@
                                 break;
                         }
                 }
-                if ($valid) {
+                if ( $valid) {
                         $next = $_SESSION["counter"];
                         $_SESSION["cart"][$next] = $id_prod;
                         $_SESSION["counter"] ++ ;
                 }
         }
-        if (!isset($ids)) {
+        if ( !isset($ids)) {
                 $ids =  array();
                 $ids[0] = 0;
         }
-        if (intval($_SESSION["counter"]) != 0) {
-                for ($i = 0; $i < intval($_SESSION["counter"]); $i++) {
+        if ( intval($_SESSION["counter"]) != 0) {
+                for ( $i = 0; $i < intval($_SESSION["counter"]); $i++) {
                         $ids[$i] = $_SESSION["cart"][$i];
                 }
         }
         if ( intval($_SESSION["counter"]) >= 0) {
                 $query = "SELECT id, title, description, price, imeg FROM MyItems WHERE id NOT IN (" . implode( ',', $ids) . ")";
-                if ( $stmt = $conn -> prepare($query)) {
-                        $stmt -> execute();
-                        $result = $stmt -> get_result();
+                if ( $stmt = $conn->prepare($query)) {
+                        $stmt->execute();
+                        $result = $stmt->get_result();
                 }
         }
  ?>
@@ -58,19 +58,18 @@
                  <title>Shopping Cart</title>
              </head>
        <body>
-           <?php echo translate("Goede dag dames en heren", "nl", "en"); ?>
             <div id="container">
                  <div id="main">
                      <table>
-                        <?php while ( $row = $result -> fetch_array(MYSQLI_NUM)) { ?>
+                        <?php while ( $row = $result->fetch_array(MYSQLI_NUM)): ?>
                                <tr>
-                                      <td><img width="200" src="<?php echo $row[4]; ?>" alt=""></td>
+                                      <td><img width = "200" src = "<?php echo $row[4]; ?>" alt = ""></td>
                                       <td><?php echo $row[1]; ?></td>
                                       <td><?php echo $row[2]; ?></td>
                                       <td><?php echo $row[3]; ?></td>
-                                      <td><a href="index.php?page=products&action=add&id=<?php echo $row[0] ?>"> Add Item </a></td>
+                                      <td><a href="index.php?page=products&action=add&id= <?php echo $row[0] ?>"> Add Item </a></td>
                                </tr>
-                       <?php } ?>
+                       <?php endwhile; ?>
                      </table>
                      <br>
                 </div>
