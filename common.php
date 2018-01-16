@@ -14,7 +14,6 @@
       $query = "INSERT INTO products (imeg) VALUES($file_path)";
       $stmt= $conn->prepare($query);
       $stmt->execute();
-
   }
     $language = isset($_GET['l']) ? $_GET['l'] : LANG_ENGLISH;
     function t($string, $args = array(), $langcode = NULL) {

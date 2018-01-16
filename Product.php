@@ -120,7 +120,7 @@
                 if ( $ok == 0) {
                     $id_prod = $id_next;
                 }
-
+                
                 }
                 if ( $stmt = $conn->prepare("INSERT INTO products (id,title,description,price) VALUES (?,?,?,?)")) {
                     $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
