@@ -33,8 +33,9 @@
             $price = "";
         }
     }
+    
     if ( isset($_POST["submit"])) {
-        
+
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
             if ( isset($_FILES["img"])) {
                 if ( empty($_FILES["img"]["name"])) {
