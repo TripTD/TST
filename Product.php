@@ -8,6 +8,14 @@
     if ( !isset($_SESSION["testarea"])) {
         $_SESSION["testarea"] = array();
     }
+
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
+    }
+
     if ( !isset($title) || !isset($description) || !isset($price)) {
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
             $id_prod = intval($_GET["id"]);
@@ -120,7 +128,7 @@
                 if ( $ok == 0) {
                     $id_prod = $id_next;
                 }
-                
+
                 }
                 if ( $stmt = $conn->prepare("INSERT INTO products (id,title,description,price) VALUES (?,?,?,?)")) {
                     $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
@@ -142,10 +150,10 @@
                     <p><?php echo $_SESSION["err"] ?></p>
                 <?php endif; ?>
                 <?php if ( $_GET["action"] == "edit"):  ?>
-                    <p><?php echo "Product editing"?></p>
+                    <p><?php echo t("Product editing"); ?></p>
                 <?php endif; ?>
                 <?php if ( $_GET["action"] == "insert"): ?>
-                    <p><?php echo "Add a product"?></p>
+                    <p><?php echo t("Add a product"); ?></p>
                 <?php endif; ?>
                 <form action = "" method = "post" enctype = "multipart/form-data">
                     <div>

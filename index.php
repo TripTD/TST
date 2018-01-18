@@ -41,9 +41,17 @@
         }
 
         if (isset($_GET["l"]) && $_GET["l"] == "fr") {
-             $_SESSION["lang"]=0;
-         }else {
-             $_SESSION["lang"]=1;
+             $_SESSION["translate"] = 1;
+         }elseif ( $_SESSION["translate"] != 1) {
+             $_SESSION["translate"] = 0;
+         }
+         if ( !isset($_SESSION["translate"])) {
+             $language = LANG_ENGLISH;
+         }
+         if ( $_SESSION["translate"] == 1) {
+             $language = LANG_FRENCH;
+         } elseif ( $_SESSION["translate"] == 0) {
+             $language = LANG_ENGLISH;
          }
 
         if ( !isset($ids)) {

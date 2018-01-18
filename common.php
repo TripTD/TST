@@ -15,7 +15,13 @@
       $stmt= $conn->prepare($query);
       $stmt->execute();
   }
-    $language = isset($_GET['l']) ? $_GET['l'] : LANG_ENGLISH;
+
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
+    }
     function t($string, $args = array(), $langcode = NULL) {
         global $language, $translation;
         $langcode = isset($langcode) ? $langcode : $language;
@@ -56,6 +62,8 @@
         "Price" => "Prix",
         "Image" => "Image",
         "Language preference" => "Preference de langue",
+        "You have not selected items yet!" => "Vous n'avez pas encore selectionne d'elements!",
+        "Product editing" => "Edition de produit",
             );
 
 
