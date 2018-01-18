@@ -5,9 +5,14 @@
     if ( !isset($_SESSION["err"])) {
         $_SESSION["err"] = "";
     }
-    if ( !isset($_SESSION["testarea"])) {
-        $_SESSION["testarea"] = array();
+
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
     }
+
     if ( !isset($title) || !isset($description) || !isset($price)) {
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
             $id_prod = intval($_GET["id"]);
@@ -33,7 +38,7 @@
             $price = "";
         }
     }
-    
+
     if ( isset($_POST["submit"])) {
 
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
@@ -142,17 +147,17 @@
                     <p><?php echo $_SESSION["err"] ?></p>
                 <?php endif; ?>
                 <?php if ( $_GET["action"] == "edit"):  ?>
-                    <p><?php echo "Product editing"?></p>
+                    <p><?php echo t("Product editing"); ?></p>
                 <?php endif; ?>
                 <?php if ( $_GET["action"] == "insert"): ?>
-                    <p><?php echo "Add a product"?></p>
+                    <p><?php echo t("Add a product"); ?></p>
                 <?php endif; ?>
                 <form action = "" method = "post" enctype = "multipart/form-data">
                     <div>
-                        <strong>Title: </strong> <input type = "text" name = "Title" value = "<?php echo $title; ?>"/><br/>
-                        <strong>Description: </strong> <input type = "text" name = "Description" value = "<?php echo $description; ?>"/><br/>
-                        <strong>Price: </strong> <input type = "number" name = "Price" value = "<?php echo $price; ?>"/><br/>
-                        <strong>Image: </strong> <input type = "file" name = "img">
+                        <strong><?php echo t('Title'); ?> </strong> <input type = "text" name = "Title" value = "<?php echo $title; ?>"/><br/>
+                        <strong><?php echo t('Description'); ?> </strong> <input type = "text" name = "Description" value = "<?php echo $description; ?>"/><br/>
+                        <strong><?php echo t('Price'); ?> </strong> <input type = "number" name = "Price" value = "<?php echo $price; ?>"/><br/>
+                        <strong><?php echo t('Image'); ?> </strong> <input type = "file" name = "img">
                         <input type = "submit" name = "submit" value = "submit">
                     </div>
                 </form>
