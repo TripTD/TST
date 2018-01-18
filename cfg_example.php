@@ -12,4 +12,7 @@
 
   define ("SHOP_EMAIL", "");
 
+  define('LANG_ENGLISH', 'en');
+  define('LANG_FRENCH', 'fr');
+
  ?>
