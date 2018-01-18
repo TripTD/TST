@@ -8,15 +8,20 @@
   }
 
   function img( $fl_extn,$fl_temp) {
-      $file_path = 'Images/'.substr(md4(time()),0,10).'.'.$fl_extn;
+      $file_path = 'Images/'.$fl_extn;
       move_uploaded_file($fl_temp,$file_path);
       $time = time();
-      $query = "INSERT INTO products (imeg) VALUES('','$file_path','$time')";
-      $do = $conn->query($query);
-
+      $query = "INSERT INTO products (imeg) VALUES($file_path)";
+      $stmt= $conn->prepare($query);
+      $stmt->execute();
   }
 
-  $language = isset($_GET['l']) ? $_GET['l'] : LANG_ENGLISH;
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
+    }
     function t($string, $args = array(), $langcode = NULL) {
         global $language, $translation;
         $langcode = isset($langcode) ? $langcode : $language;
@@ -57,6 +62,10 @@
         "Price" => "Prix",
         "Image" => "Image",
         "Language preference" => "Preference de langue",
+        "You have not selected items yet!" => "Vous n'avez pas encore selectionne d'elements!",
+        "Product editing" => "Edition de produit",
             );
+
+
 
 ?>
