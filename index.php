@@ -85,7 +85,7 @@
                      <table>
                         <?php while ( $row = $result->fetch_array(MYSQLI_NUM)): ?>
                                <tr>
-                                      <td><img width = "200" src = "<?php echo $row[4]; ?>" alt = ""></td>
+                                      <td><img width = "200" src = "Images/<?php echo $row[4]; ?>" alt = ""></td>
                                       <td><?php echo $row[1]; ?></td>
                                       <td><?php echo $row[2]; ?></td>
                                       <td><?php echo $row[3]; ?></td>

@@ -7,13 +7,10 @@
     die("Connection failed: " . $conn->connect_error);
   }
 
-  function img( $fl_extn,$fl_temp) {
+  function img( $fl_extn,$fl_temp,$fl_name) {
       $file_path = 'Images/'.$fl_extn;
       move_uploaded_file($fl_temp,$file_path);
       $time = time();
-      $query = "INSERT INTO products (imeg) VALUES($file_path)";
-      $stmt= $conn->prepare($query);
-      $stmt->execute();
   }
 
     if ( !isset($_SESSION["translate"])) {

@@ -5,9 +5,6 @@
     if ( !isset($_SESSION["err"])) {
         $_SESSION["err"] = "";
     }
-    if ( !isset($_SESSION["testarea"])) {
-        $_SESSION["testarea"] = array();
-    }
 
     if ( !isset($_SESSION["translate"])) {
         $language = LANG_ENGLISH;
@@ -30,6 +27,7 @@
                     $title = $row[1];
                     $description = $row[2];
                     $price = $row[3];
+                    $imaj = $row[4];
                 }
 
                 $result->close();
@@ -47,14 +45,14 @@
         if ( isset($_GET["action"]) && $_GET["action"] == "edit") {
             if ( isset($_FILES["img"])) {
                 if ( empty($_FILES["img"]["name"])) {
-                    echo " You need to insert an image";
                 } else {
                     $allowed = ["png","jpeg","jpg"];
                     $fl_name = $_FILES["img"]["name"];
-                    $fl_extn = strtolower(end(explode('.',$fl_name)));
+                    $tmp = (explode('.',$fl_name));
+                    $fl_extn = end($tmp);
                     $fl_temp = $_FILES["img"]["tmp_name"];
                     if ( in_array($fl_extn,$allowed)) {
-                        img($fl_extn,$fl_temp);
+                        img($fl_extn,$fl_temp,$fl_name);
                     }
                     else {
                         echo "The extension is not valid!";
@@ -77,9 +75,12 @@
             if ( $price_0 != $price) {
                 $price = $price_0;
             }
+            if ( $imaj != $fl_name) {
+                $imaj = $fl_name;
+            }
 
-            if ( $stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ? WHERE id = ?")) {
-                $stmt ->bind_param('ssss',$title,$description,$price,$id_prod);
+            if ( $stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ?, imeg = ? WHERE id = ?")) {
+                $stmt ->bind_param('sssss',$title,$description,$price,$imaj,$id_prod);
                 $stmt ->execute();
                 $stmt ->close();
                 header("Location: Products.php");
@@ -87,21 +88,6 @@
         }
 
         if ( isset($_GET["action"]) && $_GET["action"] == "insert") {
-            if ( isset($_FILES["img"])) {
-                if ( empty($_FILES["img"]["name"])) {
-                    echo " You need to insert an image";
-                } else {
-                    $allowed = ["png","jpeg","jpg"];
-                    $fl_name = $_FILES["img"]["name"];
-                    $fl_extn = strtolower(end(explode('.',$fl_name)));
-                    $fl_temp = $_FILES["img"]["tmp_name"];
-                    if ( in_array($fl_extn,$allowed)) {
-                        img($fl_extn,$fl_temp);
-                    } else {
-                        echo "The extension is not valid!";
-                    }
-                }
-            }
 
             $title = $conn->real_escape_string($_POST["Title"]);
             $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
@@ -129,9 +115,26 @@
                     $id_prod = $id_next;
                 }
 
+                if ( isset($_FILES["img"])) {
+                    if ( empty($_FILES["img"]["name"])) {
+                        echo " You need to insert an image";
+                    } else {
+                        $allowed = ["png","jpeg","jpg"];
+                        $fl_name = $_FILES["img"]["name"];
+                        $tmp = (explode('.',$fl_name));
+                        $fl_extn = end($tmp);
+                        $fl_temp = $_FILES["img"]["tmp_name"];
+                        if ( in_array($fl_extn,$allowed)) {
+                            img($fl_extn,$fl_temp,$fl_name);
+                        } else {
+                            echo "The extension is not valid!";
+                        }
+                    }
                 }
-                if ( $stmt = $conn->prepare("INSERT INTO products (id,title,description,price) VALUES (?,?,?,?)")) {
-                    $stmt->bind_param("ssss",$id_prod,$title,$description,$price);
+
+                }
+                if ( $stmt = $conn->prepare("INSERT INTO products (id,title,description,price,imeg) VALUES (?,?,?,?,?)")) {
+                    $stmt->bind_param("sssss",$id_prod,$title,$description,$price,$fl_name);
                     $stmt->execute();
                     $stmt->close();
                     header("Location: Products.php");
