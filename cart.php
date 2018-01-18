@@ -35,6 +35,13 @@
         }
     }
 
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
+    }
+
     $Message = "You haven't selected items yet!";
 
     if ( !isset($_SESSION["cart"])) {
@@ -83,9 +90,6 @@
     </head>
     <body>
         <div id="container">
-            <?php echo t('Language preference') .":" ; ?>
-            <p><a href = "cart.php"><?php echo t('English'); ?></a></p>
-            <p><a href = "cart.php?l=fr"><?php echo t('Francais'); ?></a></p>
         <?php if ( $mailerror != ""): ?>
         <?php echo $mailerror; ?>
     <?php endif; ?>
@@ -110,7 +114,7 @@
             </table>
        <?php endif; ?>
        <?php if ( $max_lim <= 0): ?>
-           <?php echo $Message; endif; ?>
+           <?php echo t("You have not selected items yet!"); endif; ?>
        <p><a href = "index.php">INDEX</a></p>
         </div><!--end container-->
         <div id="order" >
