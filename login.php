@@ -14,6 +14,13 @@
         $password = "";
     }
 
+    if ( !isset($_SESSION["translate"])) {
+        $language = LANG_ENGLISH;
+        $_SESSION["translate"] = 0;
+    } elseif ( $_SESSION["translate"] == 1) {
+        $language = LANG_FRENCH;
+    }
+
     if ( isset($_SESSION["error"]) && $_SESSION["error"] > 0) {
         echo '<p style="font-size:16px; color:red;"> WRONG CREDENTIALS! </p><br>';
         echo '<p style="font-size:16px; color:red;"> Try again! </p>';
@@ -46,11 +53,11 @@
         <body>
             <form action = "" method = "post">
                 <div>
-                    <strong>UserName: </strong> <input type = "text" name = "username" value = "<?php echo $username; ?>"/><br/>
-                    <strong>Password: </strong> <input type = "password" name = "password" value = "<?php echo $password; ?>"/><br/>
+                    <strong><?php echo t("Username"); ?>: </strong> <input type = "text" name = "username" value = "<?php echo $username; ?>"/><br/>
+                    <strong><?php echo t("Password"); ?>: </strong> <input type = "password" name = "password" value = "<?php echo $password; ?>"/><br/>
                     <input type = "submit" name = "submit" value = "Submit">
                 </div>
             </form>
-            <p><a href = "index.php"> Go to Market </a></p>
+            <p><a href = "index.php"><?php echo t("Go to Market"); ?></a></p>
         </body>
     </html>
