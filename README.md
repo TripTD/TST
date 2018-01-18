@@ -1,3 +1,3 @@
 # TST
 
-Done! improve the translation and editing!
+Done! improve editing!
