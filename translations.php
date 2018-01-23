@@ -24,6 +24,9 @@
         "Language preference" => "",
         "You have not selected items yet!" => "",
         "Product editing" => "",
-     );
+        "WRONG CREDENTIALS! Please try again!" => "",
+        "Please add a valid e-mail address!" => "",
+        "The extension is not valid!" => "",
+        "Please fill all the fields" => "");
 
     ?>
