@@ -45,7 +45,7 @@
 
         //validation for the email
         if (!valid_email($from)) {
-            echo "Please add a valid e-mail address!";
+            echo t("Please add a valid e-mail address!");
         } else {
             $name = $_POST["coustomer_name"];
             $subject = "Order list";
