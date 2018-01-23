@@ -2,6 +2,11 @@
 
     require("common.php");
 
+    //if the user who tries to reach this page is not authenthicated then return him to login
+    if (!isset($_SESSION["logged"]) && $_SESSION["logged"][0] != AP_USER && $_SESSION["logged"][1] != AP_PASSWORD) {
+        header("Location: login.php");
+    }
+
     // in case we have an edit the information on the form will be the same as on the database to make it easier to editing
     //in case we have an insertion the information on the form will be blanks
     if (!isset($title) || !isset($description) || !isset($price)) {
