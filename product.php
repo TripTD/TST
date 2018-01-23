@@ -44,7 +44,7 @@
                         $file_path = 'Images/'.$fl_extn;
                         move_uploaded_file($fl_temp,$file_path);
                     } else {
-                        echo "The extension is not valid!";
+                        echo t("The extension is not valid!");
                     }
                 }
             }
