@@ -34,7 +34,7 @@
                 $result = $stmt->get_result();
             }
         } elseif (count($_SESSION["cart"]) > 0) {
-            $sql = $sql = "SELECT id,title,description,price,imeg FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
+            $sql = "SELECT id,title,description,price,imeg FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
             if ($stmt = $conn->prepare($sql)) {
                 call_user_func_array(array($stmt,"bind_param"), array_merge(array($type),$params));
                 $stmt->execute();
