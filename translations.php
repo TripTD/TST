@@ -27,6 +27,9 @@
         "WRONG CREDENTIALS! Please try again!" => "",
         "Please add a valid e-mail address!" => "",
         "The extension is not valid!" => "",
-        "Please fill all the fields" => "");
+        "Please fill all the fields" => ""
+        "Product" => "",
+        "Products" => "",
+        );
 
     ?>
