@@ -56,8 +56,7 @@
                 $message .= $_SESSION["products"][$_SESSION["cart"][$key]-1]["title"].", ";
             }
 
-            $message .= "\n\n Additional information: "
-            .$_POST["comments"];
+            $message .= "\n\n Additional information: ".$_POST["comments"];
             $headers = "From: ". $from;
 
             if (mail(SHOP_EMAIL,$subject,$message,$headers)) {
