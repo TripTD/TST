@@ -10,7 +10,7 @@
       die("Connection failed: " . $conn->connect_error);
     }
 
-    //Making default language English
+    //Initializing translate SESSION
     if (!isset($_SESSION["translate"])) {
         $_SESSION["translate"] = "";
     }
