@@ -2,11 +2,6 @@
 
     require("common.php");
 
-    //if the user who tries to reach this page is not authenthicated then return him to login
-    if (!isset($_SESSION["logged"]) && $_SESSION["logged"][0] != AP_USER && $_SESSION["logged"][1] != AP_PASSWORD) {
-        header("Location: login.php");
-    }
-
     // in case we have an edit the information on the form will be the same as on the database to make it easier to editing
     //in case we have an insertion the information on the form will be blanks
     if (!isset($title) || !isset($description) || !isset($price)) {
@@ -18,12 +13,12 @@
             $title = $_SESSION["products"][$id_prod]["title"];
             $description = $_SESSION["products"][$id_prod]["description"];
             $price = $_SESSION["products"][$id_prod]["price"];
-            $imaj = $_SESSION["products"][$id_prod]["imeg"];
+            $image = $_SESSION["products"][$id_prod]["img"];
         } elseif (isset($_GET["action"]) && $_GET["action"] == "insert") {
             $title = "";
             $description = "";
             $price = "";
-            $imaj = "";
+            $image = "";
         }
     }
 
@@ -44,7 +39,7 @@
                         $file_path = 'Images/'.$fl_extn;
                         move_uploaded_file($fl_temp,$file_path);
                     } else {
-                        echo t("The extension is not valid!");
+                        echo "The extension is not valid!";
                     }
                 }
             }
@@ -66,13 +61,13 @@
             if ( $price_0 != $price && $price_0 != "") {
                 $price = $price_0;
             }
-            if ( $imaj != $fl_name) {
-                $imaj = $fl_name;
+            if ( $image != $fl_name) {
+                $image = $fl_name;
             }
 
             //preparing the update and execute the query
-            if ($stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ?, imeg = ? WHERE id = ?")) {
-                $stmt ->bind_param('sssss',$title,$description,$price,$imaj,$id_prod);
+            if ($stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ?, img = ? WHERE id = ?")) {
+                $stmt ->bind_param('sssss',$title,$description,$price,$image,$id_prod);
                 $stmt ->execute();
                 $stmt ->close();
                 header("Location: Products.php");
@@ -112,7 +107,7 @@
                 }
 
                 //inserting the new item into the database
-                $sql = "INSERT INTO products (title,description,price,imeg) VALUES (?,?,?,?)";
+                $sql = "INSERT INTO products (title,description,price,img) VALUES (?,?,?,?)";
                 if ($stmt = $conn->prepare($sql)) {
                     $stmt->bind_param("ssss",$title,$description,$price,$fl_name);
                     $stmt->execute();
