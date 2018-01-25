@@ -17,7 +17,7 @@
             $_SESSION["logged"] = array();
             $_SESSION["logged"][0] = $username;
             $_SESSION["logged"][1] = $password;
-            header("Location: Products.php");
+            header("Location: products.php");
         }
         else {
             echo t("WRONG CREDENTIALS! Please try again!");
@@ -31,8 +31,8 @@
         </head>
         <body>
             <?= t('Language preference') .":" ; ?>
-            <p><a href="login.php?l=en"><?= t('English'); ?></a></p>
-            <p><a href="login.php?l=fr"><?= t('Francais'); ?></a></p>
+            <p><a href="login.php?language=en"><?= t('English'); ?></a></p>
+            <p><a href="login.php?language=fr"><?= t('Francais'); ?></a></p>
             <form action="" method="post">
                 <div>
                     <strong><?= t("Username"); ?>: </strong> <input type = "text" name = "username" value =""/><br/>
