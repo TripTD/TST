@@ -56,7 +56,7 @@
             <table>
                 <?php foreach ($_SESSION["products"] as $key => $value): ?>
                     <tr>
-                        <td><img width = "200" src = "Images/<?= $_SESSION["products"][$key]["img"]; ?>" alt = ""></td>
+                        <td><img width="200" src="Images/<?= $_SESSION["products"][$key]["img"]; ?>" alt=""></td>
                         <td><?= $_SESSION["products"][$key]["title"]; ?></td>
                         <td><?= $_SESSION["products"][$key]["description"]; ?></td>
                         <td><?= $_SESSION["products"][$key]["price"]; ?></td>

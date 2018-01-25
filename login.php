@@ -35,9 +35,9 @@
             <p><a href="login.php?language=fr"><?= t('Francais'); ?></a></p>
             <form action="" method="post">
                 <div>
-                    <strong><?= t("Username"); ?>: </strong> <input type = "text" name = "username" value =""/><br/>
-                    <strong><?= t("Password"); ?>: </strong> <input type = "password" name = "password" value = ""/><br/>
-                    <input type = "submit" name = "submit" value = "Submit">
+                    <strong><?= t("Username"); ?>: </strong> <input type="text" name="username" value =""/><br/>
+                    <strong><?= t("Password"); ?>: </strong> <input type="password" name="password" value = ""/><br/>
+                    <input type="submit" name="submit" value="Submit">
                 </div>
             </form>
             <p><a href="index.php"><?= t("Go to Market"); ?></a></p>

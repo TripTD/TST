@@ -96,7 +96,7 @@
                     </tr>
                     <?php foreach ($_SESSION["cart"] as $key => $value): ?>
                         <tr>
-                            <td><img width = "200" src = "Images/<?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["img"]; ?>" alt = ""></td>
+                            <td><img width="200" src="Images/<?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["img"]; ?>" alt=""></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["title"]; ?></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["description"]; ?></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["price"]; ?></td>
@@ -112,10 +112,10 @@
         </div>
         <div id="order">
             <form action="cart.php" method="POST">
-                <?= t('Name'); ?> <input type = "text" name = "coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : ""; ?>><br>
-                <?= t('Contact details'); ?> <input type = "text" name = "email" value=<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>><br>
-                <?= t('Comments'); ?> <input type = "text" name = "comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : ""; ?>><br>
-                <input type = "submit" name= "submit" value = "Submit">
+                <?= t('Name'); ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : ""; ?>><br>
+                <?= t('Contact details'); ?> <input type="text" name="email" value=<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>><br>
+                <?= t('Comments'); ?> <input type="text" name="comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : ""; ?>><br>
+                <input type="submit" name="submit" value="Submit">
             </form>
         </div>
     </body>

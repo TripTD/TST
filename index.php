@@ -57,7 +57,7 @@
                      <table>
                         <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
                                <tr>
-                                      <td><img width = "200" src = "Images/<?= $row["img"]; ?>" alt = ""></td>
+                                      <td><img width="200" src="Images/<?= $row["img"]; ?>" alt=""></td>
                                       <td><?= $row["title"]; ?></td>
                                       <td><?= $row["description"]; ?></td>
                                       <td><?= $row["price"]; ?></td>
