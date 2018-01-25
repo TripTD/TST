@@ -12,7 +12,7 @@
 
     //Initializing translate SESSION
     if (!isset($_SESSION["translate"])) {
-        $_SESSION["translate"] = "";
+        $_SESSION["translate"] = LANG_ENGLISH;
     }
 
     //used when someone tries to change the language on some page
