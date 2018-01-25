@@ -16,7 +16,14 @@
 
         //preparing the sql statement and the parameters for binding
         if (!count($_SESSION["cart"])) {
-
+                
+            $sql = "SELECT * FROM products";
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->execute();
+                $result = $stmt->get_result();
+            }
+        } else {
+           
             //binding the parameters and selection part of the INDEX
             // type will be the data type for binding and params will be the reference array of the cart products
             if (!isset($type) && !isset($params)) {
@@ -28,13 +35,7 @@
                 $type .= "s";
                 $params[] = & $_SESSION["cart"][$i];
             }
-
-            $sql = "SELECT * FROM products";
-            if ($stmt = $conn->prepare($sql)) {
-                $stmt->execute();
-                $result = $stmt->get_result();
-            }
-        } else {
+                
             $sql = "SELECT * FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
             if ($stmt = $conn->prepare($sql)) {
                 call_user_func_array(array($stmt,"bind_param"), array_merge(array($type),$params));
