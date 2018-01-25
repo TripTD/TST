@@ -40,6 +40,6 @@
                     <input type = "submit" name = "submit" value = "Submit">
                 </div>
             </form>
-            <p><a href = "index.php"><?= t("Go to Market"); ?></a></p>
+            <p><a href="index.php"><?= t("Go to Market"); ?></a></p>
         </body>
     </html>
