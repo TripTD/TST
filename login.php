@@ -33,7 +33,7 @@
             <?= t('Language preference') .":" ; ?>
             <p><a href="login.php?l=en"><?= t('English'); ?></a></p>
             <p><a href="login.php?l=fr"><?= t('Francais'); ?></a></p>
-            <form action = "" method = "post">
+            <form action="" method="post">
                 <div>
                     <strong><?= t("Username"); ?>: </strong> <input type = "text" name = "username" value =""/><br/>
                     <strong><?= t("Password"); ?>: </strong> <input type = "password" name = "password" value = ""/><br/>
