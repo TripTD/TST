@@ -10,15 +10,10 @@
       die("Connection failed: " . $conn->connect_error);
     }
 
-    //Initializing translate SESSION
-    if (!isset($_SESSION["translate"])) {
-        $_SESSION["translate"] = "";
-    }
-
-    //used when someone tries to change the language on some page
+    //used when someone tries to change the language on some page or initializing the $_SESSION["translate"]
     if (isset($_GET["language"]) && $_GET["language"] == "fr") {
         $_SESSION["translate"] = LANG_FRENCH;
-    } elseif (isset($_GET["language"]) && $_GET["language"] == "en") {
+    } elseif ((isset($_GET["language"]) && $_GET["language"] == "en") || !isset($_SESSION["translate"])) {
         $_SESSION["translate"] = LANG_ENGLISH;
     }
 
