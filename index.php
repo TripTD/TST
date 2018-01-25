@@ -14,27 +14,28 @@
                 }
         }
 
-        //binding the parameters and selection part of the INDEX
-        // type will be the data type for binding and params will be the reference array of the cart products
-        if (!isset($type) && !isset($params)) {
-            $type = "";
-            $params = array();
-        }
-
-        for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
-            $type .= "s";
-            $params[] = & $_SESSION["cart"][$i];
-        }
-
         //preparing the sql statement and the parameters for binding
-        if (count($_SESSION["cart"]) == 0) {
+        if (!count($_SESSION["cart"])) {
+
+            //binding the parameters and selection part of the INDEX
+            // type will be the data type for binding and params will be the reference array of the cart products
+            if (!isset($type) && !isset($params)) {
+                $type = "";
+                $params = array();
+            }
+
+            for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
+                $type .= "s";
+                $params[] = & $_SESSION["cart"][$i];
+            }
+
             $sql = "SELECT * FROM products";
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->execute();
                 $result = $stmt->get_result();
             }
-        } elseif (count($_SESSION["cart"]) > 0) {
-            $sql = "SELECT id,title,description,price,imeg FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
+        } else (count($_SESSION["cart"]) > 0) {
+            $sql = "SELECT * FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
             if ($stmt = $conn->prepare($sql)) {
                 call_user_func_array(array($stmt,"bind_param"), array_merge(array($type),$params));
                 $stmt->execute();
@@ -50,13 +51,13 @@
        <body>
             <div id="container">
                 <?= t('Language preference') .":" ; ?>
-                <p><a href="index.php?l=en"><?= t('English'); ?></a></p>
-                <p><a href="index.php?l=fr"><?= t('Francais'); ?></a></p>
+                <p><a href="index.php?language=en"><?= t('English'); ?></a></p>
+                <p><a href="index.php?language=fr"><?= t('Francais'); ?></a></p>
                  <div id="main">
                      <table>
                         <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
                                <tr>
-                                      <td><img width = "200" src = "Images/<?= $row["imeg"]; ?>" alt = ""></td>
+                                      <td><img width = "200" src = "Images/<?= $row["img"]; ?>" alt = ""></td>
                                       <td><?= $row["title"]; ?></td>
                                       <td><?= $row["description"]; ?></td>
                                       <td><?= $row["price"]; ?></td>
