@@ -20,7 +20,7 @@
     //getting all the data into an array which will be used to display the cart and to send the products through the mail
     if (!isset($_SESSION["products"])) {
         $_SESSION["products"] = array();
-        $sql = "SELECT id, title, description, price, imeg FROM products";
+        $sql = "SELECT * FROM products";
         if ($stmt = $conn->prepare($sql)) {
             $stmt->execute();
             $result = $stmt->get_result();
@@ -30,7 +30,7 @@
                 $_SESSION["products"][$index_prod]["title"] = $row["title"];
                 $_SESSION["products"][$index_prod]["description"] = $row["description"];
                 $_SESSION["products"][$index_prod]["price"] = $row["price"];
-                $_SESSION["products"][$index_prod]["imeg"] = $row["imeg"];
+                $_SESSION["products"][$index_prod]["img"] = $row["img"];
                 $index_prod++;
             }
             $result->close();
@@ -83,8 +83,8 @@
     <body>
         <div id="container">
             <?= t('Language preference') .":" ; ?>
-            <p><a href="cart.php?l=en"><?= t('English'); ?></a></p>
-            <p><a href="cart.php?l=fr"><?= t('Francais'); ?></a></p>
+            <p><a href="cart.php?language=en"><?= t('English'); ?></a></p>
+            <p><a href="cart.php?language=fr"><?= t('Francais'); ?></a></p>
             <?php if (count($_SESSION["cart"]) > 0): ?>
                 <table>
                     <tr>
@@ -96,7 +96,7 @@
                     </tr>
                     <?php foreach ($_SESSION["cart"] as $key => $value): ?>
                         <tr>
-                            <td><img width = "200" src = "Images/<?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["imeg"]; ?>" alt = ""></td>
+                            <td><img width = "200" src = "Images/<?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["img"]; ?>" alt = ""></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["title"]; ?></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["description"]; ?></td>
                             <td><?= $_SESSION["products"][$_SESSION["cart"][$key]-1]["price"]; ?></td>

@@ -12,18 +12,18 @@
 
     //Making default language English
     if (!isset($_SESSION["translate"])) {
-        $_SESSION["translate"] = LANG_ENGLISH;
+        $_SESSION["translate"] = "";
     }
 
     //used when someone tries to change the language on some page
-    if (isset($_GET["l"]) && $_GET["l"] == "fr") {
+    if (isset($_GET["language"]) && $_GET["language"] == "fr") {
         $_SESSION["translate"] = LANG_FRENCH;
-    } elseif (isset($_GET["l"]) && $_GET["l"] == "en") {
+    } elseif (isset($_GET["language"]) && $_GET["language"] == "en") {
         $_SESSION["translate"] = LANG_ENGLISH;
     }
 
     //Translate function
-    function t($string, $args = array(), $langcode = NULL) {
+    function t($string, $langcode = NULL) {
         require("translations.php");
         $langcode = isset($langcode) ? $langcode : $_SESSION["translate"];
         if ( isset($translation[$langcode][$string]) ) {
