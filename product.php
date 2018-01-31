@@ -2,121 +2,136 @@
 
     require("common.php");
 
-    // in case we have an edit the information on the form will be the same as on the database to make it easier to editing
-    //in case we have an insertion the information on the form will be blanks
-    if (!isset($title) || !isset($description) || !isset($price)) {
-        if (isset($_GET["action"]) && $_GET["action"] == "edit") {
-            $id_prod = intval($_GET["id"]);
-            $id_prod = stripslashes($id_prod);
-            $id_prod--;
+    if (!isset($_SESSION["logged"]) && $_SESSION["logged"]){
+        header("Location: login.php");
+    } else {
+        
+        // in case we have an edit the information on the form will be the same as on the database to make it easier to editing
+        //in case we have an insertion the information on the form will be blanks
+        if (!isset($title) || !isset($description) || !isset($price)) {
+            if (isset($_GET["action"]) && $_GET["action"] == "edit") {
+                $id_prod = intval($_GET["id"]);
+                $id_prod = stripslashes($id_prod);
 
-            $title = $_SESSION["products"][$id_prod]["title"];
-            $description = $_SESSION["products"][$id_prod]["description"];
-            $price = $_SESSION["products"][$id_prod]["price"];
-            $image = $_SESSION["products"][$id_prod]["img"];
-        } elseif (isset($_GET["action"]) && $_GET["action"] == "insert") {
-            $title = "";
-            $description = "";
-            $price = "";
-            $image = "";
-        }
-    }
-
-    //editing and insertion operations after hitting the submit
-    if (isset($_POST["submit"])) {
-
-        //edit part
-        if (isset($_GET["action"]) && $_GET["action"] == "edit") {
-            //file upload
-            if (isset($_FILES["img"])) {
-                if (!empty($_FILES["img"]["name"])) {
-                    $allowed = ["png","jpeg","jpg"];
-                    $fl_name = $_FILES["img"]["name"];
-                    $tmp = explode('.',$fl_name);
-                    $fl_extn = end($tmp);
-                    $fl_temp = $_FILES["img"]["tmp_name"];
-                    if (in_array($fl_extn,$allowed)) {
-                        $file_path = 'Images/'.$fl_extn;
-                        move_uploaded_file($fl_temp,$file_path);
-                    } else {
-                        echo "The extension is not valid!";
+                $sql = "SELECT * FROM products WHERE id = ?";
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->bind_param("i",$id_prod);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                        $title = $row["title"];
+                        $description = $row["description"];
+                        $price = $row["price"];
+                        $image = $row["img"];
                     }
+                    $stmt->close();
+                    $result->close();
                 }
-            }
-
-            //taking data from the form
-            $title_0 = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
-            $description_0 = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
-            $price_0 = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
-            $id_prod = intval($_GET["id"]);
-            $id_prod = stripslashes($id_prod);
-
-            //checking if the data is different from the initial one, if it is the values to be updated are the ones from the form
-            if ( $title_0 != $title && $title_0 != "") {
-                $title = $title_0;
-            }
-            if ( $description_0 != $description && $description_0 != "") {
-                $description = $description_0;
-            }
-            if ( $price_0 != $price && $price_0 != "") {
-                $price = $price_0;
-            }
-            if ( $image != $fl_name) {
-                $image = $fl_name;
-            }
-
-            //preparing the update and execute the query
-            if ($stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ?, img = ? WHERE id = ?")) {
-                $stmt ->bind_param('sssss',$title,$description,$price,$image,$id_prod);
-                $stmt ->execute();
-                $stmt ->close();
-                header("Location: products.php");
+            } elseif (isset($_GET["action"]) && $_GET["action"] == "insert") {
+                $title = "";
+                $description = "";
+                $price = "";
+                $image = "";
             }
         }
 
-        //insert part
-        if (isset($_GET["action"]) && $_GET["action"] == "insert") {
+        //editing and insertion operations after hitting the submit
+        if (isset($_POST["submit"])) {
 
-            //taking the data from the form
-            $title = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
-            $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
-            $price = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
-
-            //checking to see if all the fields are good
-            if ($title == "" || $description == "" || $price == "") {
-                echo t("Please fill all the fields");
-            } else {
-
-                //checking the image upload
+            //edit part
+            if (isset($_GET["action"]) && $_GET["action"] == "edit") {
+                //file upload
                 if (isset($_FILES["img"])) {
-                    if (empty($_FILES["img"]["name"])) {
-                        echo t("You need to insert an image");
-                    } else {
+                    if (!empty($_FILES["img"]["name"])) {
                         $allowed = ["png","jpeg","jpg"];
                         $fl_name = $_FILES["img"]["name"];
-                        $tmp = (explode('.',$fl_name));
+                        $tmp = explode('.',$fl_name);
                         $fl_extn = end($tmp);
                         $fl_temp = $_FILES["img"]["tmp_name"];
                         if (in_array($fl_extn,$allowed)) {
                             $file_path = 'Images/'.$fl_extn;
                             move_uploaded_file($fl_temp,$file_path);
                         } else {
-                            echo t("The extension is not valid!");
+                            echo "The extension is not valid!";
                         }
                     }
                 }
 
-                //inserting the new item into the database
-                $sql = "INSERT INTO products (title,description,price,img) VALUES (?,?,?,?)";
-                if ($stmt = $conn->prepare($sql)) {
-                    $stmt->bind_param("ssss",$title,$description,$price,$fl_name);
-                    $stmt->execute();
-                    $stmt->close();
+                //taking data from the form
+                $title_0 = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
+                $description_0 = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
+                $price_0 = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
+                $id_prod = intval($_GET["id"]);
+                $id_prod = stripslashes($id_prod);
+
+                //checking if the data is different from the initial one, if it is the values to be updated are the ones from the form
+                if ( $title_0 != $title && $title_0 != "") {
+                    $title = $title_0;
+                }
+                if ( $description_0 != $description && $description_0 != "") {
+                    $description = $description_0;
+                }
+                if ( $price_0 != $price && $price_0 != "") {
+                    $price = $price_0;
+                }
+                if ( $image != $fl_name) {
+                    $image = $fl_name;
+                }
+
+                //preparing the update and execute the query
+                if ($stmt = $conn->prepare("UPDATE products SET title = ?, description = ?, price = ?, img = ? WHERE id = ?")) {
+                    $stmt ->bind_param('sssss',$title,$description,$price,$image,$id_prod);
+                    $stmt ->execute();
+                    $stmt ->close();
                     header("Location: products.php");
+                }
+            }
+
+            //insert part
+            if (isset($_GET["action"]) && $_GET["action"] == "insert") {
+
+                //taking the data from the form
+                $title = $conn->real_escape_string(htmlspecialchars($_POST["Title"]));
+                $description = $conn->real_escape_string(htmlspecialchars($_POST["Description"]));
+                $price = $conn->real_escape_string(htmlspecialchars($_POST["Price"]));
+
+                //checking to see if all the fields are good
+                if ($title == "" || $description == "" || $price == "") {
+                    echo t("Please fill all the fields");
+                } else {
+
+                    //checking the image upload
+                    if (isset($_FILES["img"])) {
+                        if (empty($_FILES["img"]["name"])) {
+                            echo t("You need to insert an image");
+                        } else {
+                            $allowed = ["png","jpeg","jpg"];
+                            $fl_name = $_FILES["img"]["name"];
+                            $tmp = (explode('.',$fl_name));
+                            $fl_extn = end($tmp);
+                            $fl_temp = $_FILES["img"]["tmp_name"];
+                            if (in_array($fl_extn,$allowed)) {
+                                $file_path = 'Images/'.$fl_extn;
+                                move_uploaded_file($fl_temp,$file_path);
+                            } else {
+                                echo t("The extension is not valid!");
+                            }
+                        }
+                    }
+
+                    //inserting the new item into the database
+                    $sql = "INSERT INTO products (title,description,price,img) VALUES (?,?,?,?)";
+                    if ($stmt = $conn->prepare($sql)) {
+                        $stmt->bind_param("ssss",$title,$description,$price,$fl_name);
+                        $stmt->execute();
+                        $stmt->close();
+                        header("Location: products.php");
+                    }
                 }
             }
         }
     }
+
  ?>
  <!DOCTYPE HTML PUBLIC>
     <html>
