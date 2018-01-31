@@ -79,7 +79,7 @@
             foreach ($product as $key => $value) {
                 $message .= "
                 <tr>
-                       <td><img width='200' src='http://localhost/TST1/Images/'".$product[$key]['img']." alt=''></td>
+                       <td><img width='200' src='http://localhost/TST1/Images/".$product[$key]['img']."' alt=''></td>
                        <td>Product: ".$product[$key]['title']." | </td>
                        <td>Description: ".$product[$key]['description']." | </td>
                        <td>Price: ".$product[$key]['price']." | </td>
