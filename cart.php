@@ -102,6 +102,7 @@
                     if ($key !== false) {
                         unset($_SESSION["cart"][$key]);
                     }
+                    unset($_SESSION["cart"][0]);
                     $_SESSION["cart"] = array_values($_SESSION["cart"]);
                 }
             }
