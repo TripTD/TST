@@ -61,8 +61,8 @@
             $name = $_POST["coustomer_name"];
 
             // setting the headers for html mail sending
-            $headers='MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html;charset=iso-8859-1' . "\r\n";
+            $headers = "MIME-Version: 1.0"."\r\n";
+            $headers .= "Content-type: text/html;charset=iso-8859-1"."\r\n";
             $subject = "Order list";
 
             //composing the message with the products list
@@ -79,19 +79,20 @@
             foreach ($product as $key => $value) {
                 $message .= "
                 <tr>
-                       <td><img width='200' src='Images/".$product[$key]["img"]."' alt=''></td>
-                       <td>".$product[$key]["title"]."</td>
-                       <td>".$product[$key]["description"]."</td>
-                       <td>".$product[$key]["price"]."</td>
+                       <td><img width='200' src='http://localhost/TST1/Images/'".$product[$key]['img']." alt=''></td>
+                       <td>Product: ".$product[$key]['title']." | </td>
+                       <td>Description: ".$product[$key]['description']." | </td>
+                       <td>Price: ".$product[$key]['price']." | </td>
                 </tr>
                 ";
             }
             $message .= "
                 </table>
-                <p> Additional information from the client :".$_POST["comments"]."
+                <p> Additional information from the client :".$_POST['comments']."</p>
             </body>
             </html>
             ";
+
             //sending the mail
             if (mail(SHOP_EMAIL,$subject,$message,$headers)) {
 
@@ -147,7 +148,7 @@
                 <?= t('Name'); ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : ""; ?>><br>
                 <?= t('Contact details'); ?> <input type="text" name="email" value=<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>><br>
                 <?= t('Comments'); ?> <input type="text" name="comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : ""; ?>><br>
-                <input type="submit" name="submit" value="Submit">
+                <input type="submit" name="submit" value="Check Out!">
             </form>
         </div>
     </body>

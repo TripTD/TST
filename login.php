@@ -5,24 +5,23 @@
     // $_SESSION["logged"] is used to see if the administrator is already logged in
     // if it is then when accessing the login page he will be redirected to the products page
     // also $_SESSION["logged"] is used to see if the person who tries to access products and product page is authenthicated
-    if (isset($_SESSION["logged"]) && $_SESSION["logged"][0] == AP_USER && $_SESSION["logged"][1] == AP_PASSWORD) {
+    if (isset($_SESSION["logged"]) && $_SESSION["logged"]) {
         header("Location: Products.php");
+    } else {
+        //verifing if the username and password are good
+        if (isset($_POST["submit"]))    {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            if ($username == AP_USER && $password == AP_PASSWORD) {
+                $_SESSION["logged"] = true;
+                header("Location: products.php");
+            }
+            else {
+                echo t("WRONG CREDENTIALS! Please try again!");
+            }
+        }
     }
 
-    //verifing if the username and password are good
-    if (isset($_POST["submit"]))    {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-        if ($username == AP_USER && $password == AP_PASSWORD) {
-            $_SESSION["logged"] = array();
-            $_SESSION["logged"][0] = $username;
-            $_SESSION["logged"][1] = $password;
-            header("Location: products.php");
-        }
-        else {
-            echo t("WRONG CREDENTIALS! Please try again!");
-        }
-    }
 ?>
 <!DOCTYPE HTML PUBLIC>
     <html>
