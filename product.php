@@ -2,7 +2,7 @@
 
     require("common.php");
 
-    if (!isset($_SESSION["logged"]) && $_SESSION["logged"]){
+    if (!isset($_SESSION["logged"])){
         header("Location: login.php");
     } else {
         
