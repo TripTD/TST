@@ -10,17 +10,12 @@
       die("Connection failed: " . $conn->connect_error);
     }
 
-    //used when someone tries to change the language on some page or initializing the $_SESSION["translate"]
-    if (isset($_GET["language"]) && $_GET["language"] == "fr") {
-        $_SESSION["translate"] = LANG_FRENCH;
-    } elseif ((isset($_GET["language"]) && $_GET["language"] == "en") || !isset($_SESSION["translate"])) {
-        $_SESSION["translate"] = LANG_ENGLISH;
-    }
-
     //Translate function
     function t($string, $langcode = NULL) {
         require("translations.php");
-        $langcode = isset($langcode) ? $langcode : $_SESSION["translate"];
+
+        //checking for language. if not setted  then make it default the english
+        $langcode = isset($langcode) ? $langcode : isset($_GET["language"]) ? $_GET["language"] : "en" ;
         if ( isset($translation[$langcode][$string]) ) {
                 $string = $translation[$langcode][$string];
         }
