@@ -140,7 +140,7 @@
             <p><a href="index.php"><?= t('INDEX') ?></a></p>
         </div>
         <div id="order">
-            <?php if (isset($form_message) && $form_message != ""): ?>
+            <?php if (isset($form_message)): ?>
                 <p><?= $form_message ?></p>
             <?php endif ?>
             <form action="cart.php" method="POST">
