@@ -141,7 +141,7 @@
         </div>
         <div id="order">
             <?php if (isset($form_message) && $form_message != ""): ?>
-                <p><?= $form_message ?>
+                <p><?= $form_message ?></p>
             <?php endif ?>
             <form action="cart.php" method="POST">
                 <?= t('Name') ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>><br>
