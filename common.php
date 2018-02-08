@@ -7,9 +7,14 @@
     $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 
     if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-    }
-
+        die("Connection failed: " . $conn->connect_error);
+    }   
+        
+    //Initializing the cart array
+    if (!isset($_SESSION["cart"])) {
+        $_SESSION["cart"] = array();
+    }   
+        
     //Translate function
     function t($string, $langcode = NULL) {
         require("translations.php");
@@ -22,8 +27,8 @@
         } else {
             $_SESSION["langcode"] = "en";
         }
-        if ( isset($translation[$langcode][$string]) ) {
-                $string = $translation[$langcode][$string];
+        if ( isset($translation[$_SESSION["langcode"]][$string]) ) {
+                $string = $translation[$_SESSION["langcode"]][$string];
         }
         return $string;
     }
