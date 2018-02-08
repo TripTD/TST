@@ -26,10 +26,8 @@
 
             //binding the parameters and selection part of the INDEX
             // type will be the data type for binding and params will be the reference array of the cart products
-            if (!isset($type) && !isset($params)) {
-                $type = "";
-                $params = array();
-            }
+            $type = "";
+            $params = array();
 
             for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                 $type .= "s";
