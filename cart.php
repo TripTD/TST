@@ -21,16 +21,18 @@
         if (!isset($product)) {
             $product = array();
         }
+        
+        if(){
         $type = "";
         $params = array();
-
+        }
 
         for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
             $type .= "s";
             $params[] = & $_SESSION["cart"][$i];
         }
 
-        $sql = "SELECT * FROM products WHERE id IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
+        $sql = "SELECT * FROM products WHERE id IN (" . str_repeat('?,',count($_SESSION['cart'])-1) . '?' . ")";
         if ($stmt = $conn->prepare($sql)) {
             call_user_func_array(array($stmt,"bind_param"), array_merge(array($type),$params));
             $stmt->execute();
@@ -79,16 +81,16 @@
             foreach ($product as $key => $value) {
                 $message .= "
                 <tr>
-                       <td><img width='200' src='http://localhost/TST1/Images/".$product[$key]['img']."' alt=''></td>
-                       <td>Product: ".$product[$key]['title']." | </td>
-                       <td>Description: ".$product[$key]['description']." | </td>
-                       <td>Price: ".$product[$key]['price']." | </td>
+                       <td><img width='200' src='http://localhost/TST1/Images/" . $product[$key]['img'] . "' alt=''></td>
+                       <td>Product: " . $product[$key]['title'] . " | </td>
+                       <td>Description: " . $product[$key]['description'] . " | </td>
+                       <td>Price: " . $product[$key]['price'] . " | </td>
                 </tr>
                 ";
             }
             $message .= "
                 </table>
-                <p> Additional information from the client :".$_POST['comments']."</p>
+                <p> Additional information from the client :" . $_POST['comments'] . "</p>
             </body>
             </html>
             ";
@@ -116,7 +118,7 @@
     </head>
     <body>
         <div id="container">
-            <?= t('Language preference') .":" ; ?>
+            <?= t('Language preference') . ":" ; ?>
             <p><a href="cart.php?language=en"><?= t('English'); ?></a></p>
             <p><a href="cart.php?language=fr"><?= t('Francais'); ?></a></p>
             <?php if (count($_SESSION["cart"]) > 0): ?>
