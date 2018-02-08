@@ -17,7 +17,7 @@
                 header("Location: products.php");
             }
             else {
-                echo t("WRONG CREDENTIALS! Please try again!");
+                $form_message = t("WRONG CREDENTIALS! Please try again!");
             }
         }
     }
@@ -26,19 +26,22 @@
 <!DOCTYPE HTML PUBLIC>
     <html>
         <head>
-            <title><?= t("Log in"); ?></title>
+            <title><?= t("Log in") ?></title>
         </head>
         <body>
-            <?= t('Language preference') .":" ; ?>
-            <p><a href="login.php?language=en"><?= t('English'); ?></a></p>
-            <p><a href="login.php?language=fr"><?= t('Francais'); ?></a></p>
+            <?= t('Language preference') ?> :
+            <p><a href="login.php?language=en"><?= t('English') ?></a></p>
+            <p><a href="login.php?language=fr"><?= t('Francais') ?></a></p>
+            <?php if (isset($form_message) && $form_message != ""): ?>
+                <p><?= $form_message ?>
+            <?php endif ?>
             <form action="" method="post">
                 <div>
-                    <strong><?= t("Username"); ?>: </strong> <input type="text" name="username" value =""/><br/>
-                    <strong><?= t("Password"); ?>: </strong> <input type="password" name="password" value = ""/><br/>
-                    <input type="submit" name="submit" value="Submit">
+                    <strong><?= t("Username") ?>: </strong> <input type="text" name="username" value =""/><br/>
+                    <strong><?= t("Password") ?>: </strong> <input type="password" name="password" value = ""/><br/>
+                    <input type="submit" name="submit" value="<?= t('Submit') ?>">
                 </div>
             </form>
-            <p><a href="index.php"><?= t("Go to Market"); ?></a></p>
+            <p><a href="index.php"><?= t("Go to Market") ?></a></p>
         </body>
     </html>
