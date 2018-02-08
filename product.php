@@ -52,7 +52,7 @@
                             $file_path = 'Images/'.$fl_extn;
                             move_uploaded_file($fl_temp,$file_path);
                         } else {
-                            echo "The extension is not valid!";
+                            $form_message_image =  t("The extension is not valid!");
                         }
                     }
                 }
@@ -97,13 +97,13 @@
 
                 //checking to see if all the fields are good
                 if ($title == "" || $description == "" || $price == "") {
-                    echo t("Please fill all the fields");
+                    $form_message = t("Please fill all the fields");
                 } else {
 
                     //checking the image upload
                     if (isset($_FILES["img"])) {
                         if (empty($_FILES["img"]["name"])) {
-                            echo t("You need to insert an image");
+                            $form_message = t("You need to insert an image");
                         } else {
                             $allowed = ["png","jpeg","jpg"];
                             $fl_name = $_FILES["img"]["name"];
@@ -114,7 +114,7 @@
                                 $file_path = 'Images/'.$fl_extn;
                                 move_uploaded_file($fl_temp,$file_path);
                             } else {
-                                echo t("The extension is not valid!");
+                                $form_message_image = t("The extension is not valid!");
                             }
                         }
                     }
@@ -140,6 +140,12 @@
     </head>
     <body>
         <div id="sett">
+            <?php if (isset($form_message)): ?>
+                <p><?= $form_message ?></p>
+            <?php endif ?>
+            <?php if (isset($form_message_image)): ?>
+                <p><?= $form_message_image ?></p>
+            <?php endif ?>
             <form action="" method="post" enctype="multipart/form-data">
                 <strong><?= t('Title') ?> </strong> <input type="text" name="Title" value="<?= $title ?>"/><br/>
                 <strong><?= t('Description') ?> </strong> <input type="text" name="Description" value="<?= $description ?>"/><br/>
