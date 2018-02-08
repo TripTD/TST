@@ -114,43 +114,43 @@
  <!DOCTYPE html PUBLIC>
     <html>
     <head>
-        <title><?= t("Cart"); ?></title>
+        <title><?= t("Cart") ?></title>
     </head>
     <body>
         <div id="container">
-            <?= t('Language preference') . ":" ; ?>
-            <p><a href="cart.php?language=en"><?= t('English'); ?></a></p>
-            <p><a href="cart.php?language=fr"><?= t('Francais'); ?></a></p>
+            <?= t('Language preference') . ":" ?>
+            <p><a href="cart.php?language=en"><?= t('English') ?></a></p>
+            <p><a href="cart.php?language=fr"><?= t('Francais') ?></a></p>
             <?php if (count($_SESSION["cart"]) > 0): ?>
                 <table>
                     <tr>
                         <th>     </th>
-                        <th><?= t('Title'); ?></th>
-                        <th><?= t('Description'); ?></th>
-                        <th><?= t('Price'); ?></th>
+                        <th><?= t('Title') ?></th>
+                        <th><?= t('Description') ?></th>
+                        <th><?= t('Price') ?></th>
                         <th> </th>
                     </tr>
                     <?php foreach ($product as $key => $value): ?>
                            <tr>
-                                  <td><img width="200" src="Images/<?= $product[$key]["img"]; ?>" alt=""></td>
-                                  <td><?= $product[$key]["title"]; ?></td>
-                                  <td><?= $product[$key]["description"]; ?></td>
-                                  <td><?= $product[$key]["price"]; ?></td>
-                                  <td><a href="cart.php?id=<?= $product[$key]['id'] ?>"><?= t('Remove Item'); ?></a></td>
+                                  <td><img width="200" src="Images/<?= $product[$key]["img"] ?>" alt=""></td>
+                                  <td><?= $product[$key]["title"] ?></td>
+                                  <td><?= $product[$key]["description"] ?></td>
+                                  <td><?= $product[$key]["price"] ?></td>
+                                  <td><a href="cart.php?id=<?= $product[$key]['id'] ?>"><?= t('Remove Item') ?></a></td>
                            </tr>
-                   <?php endforeach; ?>
+                   <?php endforeach ?>
                 </table>
-            <?php endif; ?>
+            <?php endif ?>
             <?php if (!count($_SESSION["cart"])): ?>
-                <?= t("You have not selected items yet!"); ?>
-            <?php endif; ?>
+                <?= t("You have not selected items yet!") ?>
+            <?php endif ?>
             <p><a href="index.php"> INDEX </a></p>
         </div>
         <div id="order">
             <form action="cart.php" method="POST">
-                <?= t('Name'); ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : ""; ?>><br>
-                <?= t('Contact details'); ?> <input type="text" name="email" value=<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>><br>
-                <?= t('Comments'); ?> <input type="text" name="comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : ""; ?>><br>
+                <?= t('Name') ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>><br>
+                <?= t('Contact details') ?> <input type="text" name="email" value=<?= isset($_POST["email"]) ? $_POST["email"] : "" ?>><br>
+                <?= t('Comments') ?> <input type="text" name="comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : "" ?>><br>
                 <input type="submit" name="submit" value="Check Out!">
             </form>
         </div>
