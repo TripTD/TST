@@ -1,11 +1,6 @@
 <?php
         require("common.php");
 
-        //Initializing the cart array
-        if (!isset($_SESSION["cart"])) {
-                $_SESSION["cart"] = array();
-        }
-
         //checking for product id to store it in the cart array
         if (isset($_GET["id"]) && intval($_GET["id"])) {
                 $id_prod = intval( $_GET["id"]);
@@ -26,14 +21,12 @@
 
             //binding the parameters and selection part of the INDEX  
             // type will be the data type for binding and params will be the reference array of the cart products
-            if(){
-                $type = "";
-                $params = array();
-            }
+            $type = "";
+            $params = array();
 
-            for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
+            foreach ($_SESSION["cart"]  as $key => $value) {
                 $type .= "s";
-                $params[] = & $_SESSION["cart"][$i];
+                $params[] = & $value;
             }
 
             $sql = "SELECT * FROM products WHERE id NOT IN (" . str_repeat('?,',count($_SESSION['cart'])-1) . '?' . ")";
@@ -51,7 +44,7 @@
              </head>
        <body>
             <div id="container">
-                <?= t('Language preference') . ":"  ?>
+                <?= t('Language preference') ?> :
                 <p><a href="index.php?language=en"><?= t('English') ?></a></p>
                 <p><a href="index.php?language=fr"><?= t('Francais') ?></a></p>
                  <div id="main">
