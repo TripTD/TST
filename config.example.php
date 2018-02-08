@@ -15,6 +15,3 @@
 
     //The mail where the products in the cart will be sent to
     define ("SHOP_EMAIL", "");
-
-
- ?>
