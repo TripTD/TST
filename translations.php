@@ -30,6 +30,10 @@
         "Please fill all the fields" => "",
         "Product" => "",
         "Products" => "",
+        "Order list" => "",
+        "Products list desired by coustomer" => "",
+        "E-mail adress of the coustomer" => "",
+        "Additional information from the client" => "",
         );
 
     ?>
