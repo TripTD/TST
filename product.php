@@ -136,16 +136,16 @@
  <!DOCTYPE HTML PUBLIC>
     <html>
     <head>
-        <title><?= t("Product"); ?></title>
+        <title><?= t("Product") ?></title>
     </head>
     <body>
         <div id="sett">
             <form action="" method="post" enctype="multipart/form-data">
-                <strong><?= t('Title'); ?> </strong> <input type="text" name="Title" value="<?= $title; ?>"/><br/>
-                <strong><?= t('Description'); ?> </strong> <input type="text" name="Description" value="<?= $description; ?>"/><br/>
-                <strong><?= t('Price'); ?> </strong> <input type="number" name="Price" value="<?= $price; ?>"/><br/>
-                <strong><?= t('Image'); ?> </strong> <input type="file" name="img">
-                <input type="submit" name="submit" value="submit">
+                <strong><?= t('Title') ?> </strong> <input type="text" name="Title" value="<?= $title ?>"/><br/>
+                <strong><?= t('Description') ?> </strong> <input type="text" name="Description" value="<?= $description ?>"/><br/>
+                <strong><?= t('Price') ?> </strong> <input type="number" name="Price" value="<?= $price ?>"/><br/>
+                <strong><?= t('Image') ?> </strong> <input type="file" name="img">
+                <input type="submit" name="submit" value="<?= t('Submit') ?>">
             </form>
         </div>
     </body>
