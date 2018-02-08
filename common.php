@@ -15,7 +15,13 @@
         require("translations.php");
 
         //checking for language. if not setted  then make it default the english
-        $langcode = isset($langcode) ? $langcode : (isset($_GET["language"]) ? $_GET["language"] : "en") ;
+        if (isset($_SESSION["langcode"])) {
+            if (isset($_GET["language"])) {
+                $_SESSION["langcode"] = $_GET["language"];
+            }
+        } else {
+            $_SESSION["langcode"] = "en";
+        }
         if ( isset($translation[$langcode][$string]) ) {
                 $string = $translation[$langcode][$string];
         }
