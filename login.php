@@ -33,7 +33,7 @@
             <p><a href="login.php?language=en"><?= t('English') ?></a></p>
             <p><a href="login.php?language=fr"><?= t('Francais') ?></a></p>
             <?php if (isset($form_message) && $form_message != ""): ?>
-                <p><?= $form_message ?>
+                <p><?= $form_message ?></p>
             <?php endif ?>
             <form action="" method="post">
                 <div>
