@@ -34,30 +34,30 @@
 <!DOCTYPE HTML PUBLIC>
     <html>
     <head>
-        <title><?= t("Products"); ?></title>
+        <title><?= t("Products") ?></title>
     </head>
     <body>
         <div id="container">
-            <?= t('Language preference') .":" ; ?>
-            <p><a href="products.php?language=en"><?= t('English'); ?></a></p>
-            <p><a href="products.php?language=fr"><?= t('Francais'); ?></a></p>
+            <?= t('Language preference') ?> :
+            <p><a href="products.php?language=en"><?= t('English') ?></a></p>
+            <p><a href="products.php?language=fr"><?= t('Francais') ?></a></p>
             <table>
                 <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
                     <tr>
-                        <td><img width="200" src="Images/<?= $row["img"]; ?>" alt=""></td>
-                        <td><?= $row["title"]; ?></td>
-                        <td><?= $row["description"]; ?></td>
-                        <td><?= $row["price"]; ?></td>
-                        <td><a href="product.php?action=edit&id=<?= $row['id']; ?>"><?= t("Edit Item"); ?></a></td>
-                        <td><a href="products.php?action=remove&id=<?= $row['id']; ?>"><?= t("Remove Item"); ?></a></td>
+                        <td><img width="200" src="Images/<?= $row["img"] ?>" alt=""></td>
+                        <td><?= $row["title"] ?></td>
+                        <td><?= $row["description"] ?></td>
+                        <td><?= $row["price"] ?></td>
+                        <td><a href="product.php?action=edit&id=<?= $row['id'] ?>"><?= t("Edit Item") ?></a></td>
+                        <td><a href="products.php?action=remove&id=<?= $row['id'] ?>"><?= t("Remove Item") ?></a></td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endwhile ?>
             </table>
         </div>
         <div id="opt">
-            <p><a href="product.php?action=insert"><?= t('Add Item'); ?></a></p>
+            <p><a href="product.php?action=insert"><?= t('Add Item') ?></a></p>
             <br>
-            <p><a href="products.php?action=logout"><?= t('Log out'); ?></a></p>
+            <p><a href="products.php?action=logout"><?= t('Log out') ?></a></p>
         </div>
     </body>
     </html>
