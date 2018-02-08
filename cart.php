@@ -21,10 +21,9 @@
         if (!isset($product)) {
             $product = array();
         }
-        if (!isset($type) && !isset($params)) {
-            $type = "";
-            $params = array();
-        }
+        $type = "";
+        $params = array();
+
 
         for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
             $type .= "s";
