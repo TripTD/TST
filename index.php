@@ -24,17 +24,19 @@
             }
         } else {
 
-            //binding the parameters and selection part of the INDEX
+            //binding the parameters and selection part of the INDEX  
             // type will be the data type for binding and params will be the reference array of the cart products
-            $type = "";
-            $params = array();
+            if(){
+                $type = "";
+                $params = array();
+            }
 
             for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                 $type .= "s";
                 $params[] = & $_SESSION["cart"][$i];
             }
 
-            $sql = "SELECT * FROM products WHERE id NOT IN (".str_repeat('?,',count($_SESSION['cart'])-1).'?'.")";
+            $sql = "SELECT * FROM products WHERE id NOT IN (" . str_repeat('?,',count($_SESSION['cart'])-1) . '?' . ")";
             if ($stmt = $conn->prepare($sql)) {
                 call_user_func_array(array($stmt,"bind_param"), array_merge(array($type),$params));
                 $stmt->execute();
@@ -49,7 +51,7 @@
              </head>
        <body>
             <div id="container">
-                <?= t('Language preference') .":" ; ?>
+                <?= t('Language preference') . ":" ; ?>
                 <p><a href="index.php?language=en"><?= t('English'); ?></a></p>
                 <p><a href="index.php?language=fr"><?= t('Francais'); ?></a></p>
                  <div id="main">
