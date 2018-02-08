@@ -47,38 +47,38 @@
  <!DOCTYPE html PUBLIC>
        <html >
              <head>
-                 <title><?= t("Shopping"); ?></title>
+                 <title><?= t("Shopping") ?></title>
              </head>
        <body>
             <div id="container">
-                <?= t('Language preference') . ":" ; ?>
-                <p><a href="index.php?language=en"><?= t('English'); ?></a></p>
-                <p><a href="index.php?language=fr"><?= t('Francais'); ?></a></p>
+                <?= t('Language preference') . ":"  ?>
+                <p><a href="index.php?language=en"><?= t('English') ?></a></p>
+                <p><a href="index.php?language=fr"><?= t('Francais') ?></a></p>
                  <div id="main">
                      <table>
                          <tr>
                              <th>     </th>
-                             <th><?= t('Title'); ?></th>
-                             <th><?= t('Description'); ?></th>
-                             <th><?= t('Price'); ?></th>
+                             <th><?= t('Title') ?></th>
+                             <th><?= t('Description') ?></th>
+                             <th><?= t('Price') ?></th>
                              <th> </th>
                          </tr>
                         <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)): ?>
                                <tr>
-                                      <td><img width="200" src="Images/<?= $row["img"]; ?>" alt=""></td>
-                                      <td><?= $row["title"]; ?></td>
-                                      <td><?= $row["description"]; ?></td>
-                                      <td><?= $row["price"]; ?></td>
-                                      <td><a href="index.php?id=<?= $row['id'] ?>"><?= t('Add Item'); ?></a></td>
+                                      <td><img width="200" src="Images/<?= $row["img"] ?>" alt=""></td>
+                                      <td><?= $row["title"] ?></td>
+                                      <td><?= $row["description"] ?></td>
+                                      <td><?= $row["price"] ?></td>
+                                      <td><a href="index.php?id=<?= $row['id'] ?>"><?= t('Add Item') ?></a></td>
                                </tr>
-                       <?php endwhile; ?>
+                       <?php endwhile ?>
                      </table>
                      <br>
                 </div>
-                <p><a href="cart.php"><?= t('Go to Cart'); ?></a></p>
+                <p><a href="cart.php"><?= t('Go to Cart') ?></a></p>
             </div>
             <?php if (!isset($_SESSION["logged"]) || !$_SESSION["logged"]): ?>
-                <p><a href="login.php"><?= t('Log in'); ?></a></p>
-            <?php endif; ?>
+                <p><a href="login.php"><?= t('Log in') ?></a></p>
+            <?php endif ?>
        </body>
        </html>
