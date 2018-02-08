@@ -22,14 +22,12 @@
             $product = array();
         }
         
-        if(){
         $type = "";
         $params = array();
-        }
-
-        for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
+        
+        foreach ($_SESSION["cart"]  as $key => $value) {
             $type .= "s";
-            $params[] = & $_SESSION["cart"][$i];
+            $params[] = & $value;
         }
 
         $sql = "SELECT * FROM products WHERE id IN (" . str_repeat('?,',count($_SESSION['cart'])-1) . '?' . ")";
@@ -57,55 +55,51 @@
 
         //validation for the email
         if(!boolval(filter_var($from, FILTER_VALIDATE_EMAIL))) {
-            echo t("Please add a valid e-mail adress!");
+            $form_message = t("Please add a valid e-mail adress!");
         } else {
             $name = $_POST["coustomer_name"];
 
             // setting the headers for html mail sending
-            $headers = "MIME-Version: 1.0"."\r\n";
-            $headers .= "Content-type: text/html;charset=iso-8859-1"."\r\n";
-            $headers .= "From: ".$from."\r\n";
-            $subject = "Order list";
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type: text/html;charset=iso-8859-1" . "\r\n";
+            $headers .= "From: " . SHOP_EMAIL . "\r\n";
+            $subject = t("Order list");
+            
+            $server_adr = strtok($_SERVER['SERVER_PROTOCOL'],'/') . '://' . $_SERVER['SERVER_NAME'] . '/' . strtok($_SERVER['PHP_SELF'],'/') . '/Images/';
 
             //composing the message with the products list
-            $message = "
+            $message = '
             <html>
             <head>
-                <title> Ordered products </title>
+                <title>' . t("Ordered products") . '</title>
             </head>
             <body>
-                <p> Products list desired by coustomer:".$name."</p>
-                <p> E-mail adress of the coustomer:".$from."</p>
+                <p>' . t("Products list desired by coustomer") . ':' . $name . '</p>
+                <p>' . t("E-mail adress of the coustomer") . ':' . $from . '</p>
                 <table>
-                ";
+                ';
             foreach ($product as $key => $value) {
-                $message .= "
+                $message .= '
                 <tr>
-                       <td><img width='200' src='http://localhost/TST1/Images/" . $product[$key]['img'] . "' alt=''></td>
-                       <td>Product: " . $product[$key]['title'] . " | </td>
-                       <td>Description: " . $product[$key]['description'] . " | </td>
-                       <td>Price: " . $product[$key]['price'] . " | </td>
+                       <td><img width="200" src="' . $server_adr . $value["img"] . '" alt=""></td>
+                       <td>' . t("Product") . ': ' . $value["title"] . ' | </td>
+                       <td>' . t("Description") . ': ' . $value["description"] . ' | </td>
+                       <td>' . t("Price") . ': ' . $value["price"] . ' | </td>
                 </tr>
-                ";
+                ';
             }
-            $message .= "
+            $message .= '
                 </table>
-                <p> Additional information from the client :" . $_POST['comments'] . "</p>
+                <p>' . t("Additional information from the client") . ': ' . $_POST["comments"] . '</p>
             </body>
             </html>
-            ";
+            ';
 
             //sending the mail
             if (mail(SHOP_EMAIL,$subject,$message,$headers)) {
 
                 //Releasing all the data from the cart as the mail was sent
-                foreach ($_SESSION["cart"] as $key => $value) {
-                    if ($key !== false) {
-                        unset($_SESSION["cart"][$key]);
-                    }
-                    unset($_SESSION["cart"][0]);
-                    $_SESSION["cart"] = array_values($_SESSION["cart"]);
-                }
+                $_SESSION["cart"] = array();
             }
         }
     }
@@ -118,7 +112,7 @@
     </head>
     <body>
         <div id="container">
-            <?= t('Language preference') . ":" ?>
+            <?= t('Language preference') ?> :
             <p><a href="cart.php?language=en"><?= t('English') ?></a></p>
             <p><a href="cart.php?language=fr"><?= t('Francais') ?></a></p>
             <?php if (count($_SESSION["cart"]) > 0): ?>
@@ -132,26 +126,28 @@
                     </tr>
                     <?php foreach ($product as $key => $value): ?>
                            <tr>
-                                  <td><img width="200" src="Images/<?= $product[$key]["img"] ?>" alt=""></td>
-                                  <td><?= $product[$key]["title"] ?></td>
-                                  <td><?= $product[$key]["description"] ?></td>
-                                  <td><?= $product[$key]["price"] ?></td>
-                                  <td><a href="cart.php?id=<?= $product[$key]['id'] ?>"><?= t('Remove Item') ?></a></td>
+                                  <td><img width="200" src="Images/<?= $value["img"] ?>" alt=""></td>
+                                  <td><?= $value["title"] ?></td>
+                                  <td><?= $value["description"] ?></td>
+                                  <td><?= $value["price"] ?></td>
+                                  <td><a href="cart.php?id=<?= $value['id'] ?>"><?= t('Remove Item') ?></a></td>
                            </tr>
                    <?php endforeach ?>
                 </table>
-            <?php endif ?>
-            <?php if (!count($_SESSION["cart"])): ?>
+            <?php else : ?>
                 <?= t("You have not selected items yet!") ?>
             <?php endif ?>
-            <p><a href="index.php"> INDEX </a></p>
+            <p><a href="index.php"><?= t('INDEX') ?></a></p>
         </div>
         <div id="order">
+            <?php if (isset($form_message) && $form_message != ""): ?>
+                <p><?= $form_message ?>
+            <?php endif ?>
             <form action="cart.php" method="POST">
                 <?= t('Name') ?> <input type="text" name="coustomer_name" value=<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>><br>
                 <?= t('Contact details') ?> <input type="text" name="email" value=<?= isset($_POST["email"]) ? $_POST["email"] : "" ?>><br>
                 <?= t('Comments') ?> <input type="text" name="comments" value=<?= isset($_POST["comments"]) ? $_POST["comments"] : "" ?>><br>
-                <input type="submit" name="submit" value="Check Out!">
+                <input type="submit" name="submit" value="<?= t('Check Out!') ?>">
             </form>
         </div>
     </body>
