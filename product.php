@@ -74,7 +74,7 @@
                 if ( $price_0 != $price && $price_0 != "") {
                     $price = $price_0;
                 }
-                if ( $image != $fl_name) {
+                if ( $image != $fl_name && $fl_name != "") {
                     $image = $fl_name;
                 }
 
