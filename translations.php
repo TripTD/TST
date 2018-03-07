@@ -1,9 +1,7 @@
 <?php
 
-    global $translation;
-
     // The argument for the $translation is a reference to the desired language
-    $translation[""] = array(
+    $translations = ['' => [
         "Username" => "",
         "Name" => "",
         "Add Item" => "",
@@ -30,10 +28,6 @@
         "Please fill all the fields" => "",
         "Product" => "",
         "Products" => "",
-        "Order list" => "",
-        "Products list desired by coustomer" => "",
-        "E-mail adress of the coustomer" => "",
-        "Additional information from the client" => "",
-        );
-
-    ?>
+        "Check Out!" => "",
+        "Submit" => "",
+    ]];
