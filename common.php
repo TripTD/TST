@@ -15,6 +15,7 @@ if (!isset($_SESSION["cart"])) {
     $_SESSION["cart"] = array();
 }
 
+//checking for language. if not set  then make it default the english
 if (!isset($_SESSION["language"])) {
     $_SESSION["language"] = "en";
 }
@@ -27,8 +28,7 @@ require_once("translations.php");
 //Translate function
 function t($string, $langcode = NULL) {
     global $translations;
-
-    //checking for language. if not set  then make it default the english
+    
     if ( isset($translations[$_SESSION["language"]][$string]) ) {
         $string = $translations[$_SESSION["language"]][$string];
     }
