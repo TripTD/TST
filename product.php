@@ -33,7 +33,7 @@ if (isset($_GET["id"])) {
     $image = "";
 }
 
-$allowed = ["image/png","image/jpeg"];
+$allowed = ["image/png", "image/jpeg"];
 $prefix = time() . '_';
 
 //editing and insertion operations after hitting the submit
@@ -98,7 +98,7 @@ if (isset($_POST["submit"])) {
             }
 
             //inserting the new item into the database
-            $sql = "INSERT INTO products (title,description,price,img) VALUES (?,?,?,?)";
+            $sql = "INSERT INTO products (title, description, price, img) VALUES (?, ?, ?, ?)";
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("ssss", $title, $description, $price, $image);
                 $stmt->execute();
