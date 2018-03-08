@@ -2,7 +2,7 @@
 
 require("common.php");
 
-
+// test
 //checking for product id to remove it from the cart array
 if (isset($_GET["id"]) && intval($_GET["id"])) {
     $id_prod = intval($_GET["id"]);
